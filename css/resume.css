@@ -148,8 +148,8 @@ a:hover, a:focus, a:active {
 }
 
 .poster {
-		width: 475px;
-		height: 300px;
+		width: 100%;
+		height: auto;
 }	
 
 
