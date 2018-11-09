@@ -1,7 +1,7 @@
 body {
   font-family: 'Open Sans', serif;
   padding-top: 54px;
-  color: #3f89d3;
+  color: #41b3a3;
 }
 
 @media (min-width: 992px) {
@@ -20,7 +20,7 @@ h6 {
   font-family: 'Saira Extra Condensed', serif;
   font-weight: 700;
   text-transform: uppercase;
-  color: #544d15;
+  color: #41b3a3;
 }
 
 h1 {
@@ -50,7 +50,7 @@ h2 {
 }
 
 .list-social-icons a:hover {
-  color: #821b06;
+  color: #e8a873;
 }
 
 .list-social-icons a .fa-lg {
@@ -62,7 +62,7 @@ h2 {
 }
 
 .list-icons .list-inline-item i:hover {
-  color: #821b06;
+  color: #e8a873;
 }
 
 #sideNav .navbar-nav .nav-item .nav-link {
@@ -137,11 +137,11 @@ section.resume-section .resume-item .resume-date {
 }
 
 .bg-primary {
-  background-color: #96574b !important;
+  background-color: #e27d60 !important;
 }
 
 .text-primary {
-  color: #3f89d3 !important;
+  color: #85dcb !important;
 }
 
 a {
@@ -149,7 +149,7 @@ a {
 }
 
 a:hover, a:focus, a:active {
-  color: #824027;
+  color: #e8a873;
 }
 
 .poster {
