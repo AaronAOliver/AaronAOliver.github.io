@@ -81,13 +81,13 @@ analytics:
 # Site Author
 author:
   name             : "Aaron Oliver"
-  avatar           : "profile.png"
+  avatar           : "IMG_1363.jpg"
   bio              : "PhD Student at UC San Diego, computational marine microbiologist"
-  location         : "San Diego, California"
+  location         : "Mission Beach, San Diego, California"
   employer         : 
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=uSxTtFEAAAAJ&hl=en"
-  email            :
+  email            : "a3oliver@ucsd.edu"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -102,7 +102,7 @@ author:
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : "https://www.linkedin.com/in/aaronaoliver/"
+  linkedin         : "aaronaoliver"
   orcid            : "https://orcid.org/0000-0002-0410-8284"
   pinterest        :
   soundcloud       :
