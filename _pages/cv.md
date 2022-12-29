@@ -11,8 +11,8 @@ redirect_from:
 
 Education
 ======
-* B.S. in Biology with a Specialization in Bioinformatics, UC San Diego, 2021
 * Ph.D in Marine Biology, UC San Diego, 2026 (expected)
+* B.S. in Biology with a Specialization in Bioinformatics, UC San Diego, 2021
 
 Work experience
 ======
