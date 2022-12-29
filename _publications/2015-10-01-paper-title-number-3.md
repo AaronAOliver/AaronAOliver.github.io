@@ -1,15 +1,18 @@
 ---
-title: "Paper Title Number 3"
+title: "Phenotypic and transcriptional response of <i>Daphnia pulicaria</i> to the combined effects of temperature and predation"
 collection: publications
 permalink: /publication/2015-10-01-paper-title-number-3
-excerpt: 'This paper is about the number 3. The number 4 is left for future work.'
-date: 2015-10-01
-venue: 'Journal 1'
-paperurl: 'http://academicpages.github.io/files/paper3.pdf'
-citation: 'Your Name, You. (2015). &quot;Paper Title Number 3.&quot; <i>Journal 1</i>. 1(3).'
+excerpt: '<i>Daphnia</i>, an ecologically important zooplankton species in lakes, shows both genetic adaptation and phenotypic plasticity in response to temperature and fish predation, but little is known about the molecular basis of these responses and their potential interactions. We performed a factorial experiment exposing laboratory-propagated Daphnia pulicaria clones from two lakes in the Sierra Nevada mountains of California to normal or high temperature (15˚C or 25˚C) in the presence or absence of fish kairomones, then measured changes in life history and gene expression.'
+date: 2022-06-14
+venue: 'PLoS ONE'
+paperurl: 'http://aaronoliver.dev/files/DaphniaPulicaria2022.pdf'
+citation: '<b>Oliver, A.</b>, Cavalheri, H.B., Lima T.G. <i>et al.</i> Phenotypic and transcriptional response of <i>Daphnia pulicaria</i> to the combined effects of temperature and predation. <i>PLoS ONE</i> 17, 7 (2022).'
 ---
-This paper is about the number 3. The number 4 is left for future work.
+<i>Daphnia</i>, an ecologically important zooplankton species in lakes, shows both genetic adaptation and phenotypic plasticity in response to temperature and fish predation, but little is known about the molecular basis of these responses and their potential interactions. We performed a factorial experiment exposing laboratory-propagated Daphnia pulicaria clones from two lakes in the Sierra Nevada mountains of California to normal or high temperature (15˚C or 25˚C) in the presence or absence of fish kairomones, then measured changes in life history and gene expression.
 
-[Download paper here](http://academicpages.github.io/files/paper3.pdf)
+[Download paper here](http://aaronoliver.dev/files/DaphniaPulicaria2022.pdf)
 
-Recommended citation: Your Name, You. (2015). "Paper Title Number 3." <i>Journal 1</i>. 1(3).
+Recommended citation: <b>Oliver, A.</b>, Cavalheri, H.B., Lima T.G. <i>et al.</i> Phenotypic and transcriptional response of <i>Daphnia pulicaria</i> to the combined effects of temperature and predation. <i>PLoS ONE</i> 17, 7 (2022).
+
+
+
