@@ -13,5 +13,3 @@ This study has determined relative abundance, taxonomic novelty, metabolic capac
 [Open access link to paper!](https://doi.org/10.1186/s40168-020-00877-y)
 
 [Download paper here!](/files/SpongeMicrobes2020.pdf)
-
-Recommended citation: Podell, S., Blanton, J.M., <b>Oliver, A.</b> <i>et al</i>. A genomic view of trophic and metabolic diversity in clade-specific <i>Lamellodysidea</i> sponge microbiomes. <i>Microbiome</i> 8, 97 (2020).
