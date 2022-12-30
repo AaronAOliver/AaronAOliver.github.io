@@ -13,8 +13,3 @@ citation: '<b>Oliver, A.</b>, Cavalheri, H.B., Lima, T.G. <i>et al.</i> Phenotyp
 [Open access link to paper!](https://doi.org/10.1371/journal.pone.0265103)
 
 [Download paper here!](/files/DaphniaPulicaria2022.pdf)
-
-Recommended citation: <b>Oliver, A.</b>, Cavalheri, H.B., Lima, T.G. <i>et al.</i> Phenotypic and transcriptional response of <i>Daphnia pulicaria</i> to the combined effects of temperature and predation. <i>PLoS ONE</i> 17, 7 (2022).
-
-
-

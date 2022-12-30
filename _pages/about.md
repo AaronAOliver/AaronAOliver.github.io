@@ -8,7 +8,11 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I'm Aaron, a PhD student at the University of California, San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb) at [Scripps Institution of Oceanography](https://scripps.ucsd.edu/). I work in the lab of [Prof. Eric Allen](https://eallen.scrippsprofiles.ucsd.edu/), which hosts researchers from both Scripps and UC San Diego's School of Biological Sciences. I apply my background in computer science to explore communities of marine microorganisms using 'omics. My research and teaching are grounded in the idea that computational and bioinformatic methods are often underutilized in the marine sciences, especially ecology. 
+Hello! I'm Aaron, a PhD student at the University of California, San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb)
+at [Scripps Institution of Oceanography](https://scripps.ucsd.edu/). I work in the lab of [Prof. Eric Allen](https://eallen.scrippsprofiles.ucsd.edu/),
+which hosts researchers from both Scripps and UC San Diego's School of Biological Sciences.
+I leverage my background in computer science to explore communities of marine microorganisms <i>in silico</i>.
+My research and teaching are grounded in the idea that bioinformatic methods are often underutilized in marine biology, especially ecology. 
 
 My research
 ------
@@ -23,14 +27,30 @@ energy production, aquaculture, and marine ecosystem dynamics.
 
 Collaboration in computational science
 -----
-Throughout my research career, I have sought collaborations with a diverse array of academic, government, and industry partners. I believe that high-throughput computational methods and the integration of big data into marine and microbial ecology will drive an explosion of new discoveries. Thus, I find it crucial for bioinformaticians such as myself to collaborate with wet lab researchers and spread these methodological breakthroughs. These partnerships have included collaborations at UC San Diego with the labs of [Prof. Jon Shurin](https://shurinlab.biosci.ucsd.edu/) and [Prof. Stephen Mayfield](https://algae.ucsd.edu/mayfield/index.html), but also government labs at the [Joint Genome Institute](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html), National Renewable Energy Laboratory, and the Pacific Northwest National Laboratory.
+Throughout my research career, I have sought collaborations with a diverse array of academic, government, and industry partners.
+I believe that high-throughput computational methods and the integration of big data into marine and microbial ecology will drive an explosion of new discoveries.
+Thus, I find it crucial for bioinformaticians such as myself to collaborate with wet lab researchers and spread these methodological breakthroughs.
+These partnerships have included not only collaborations at UC San Diego with the labs of ecologist [Prof. Jon Shurin](https://shurinlab.biosci.ucsd.edu/)
+and molecular biologist [Prof. Stephen Mayfield](https://algae.ucsd.edu/mayfield/index.html),
+but also government labs at the [Joint Genome Institute](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html),
+the National Renewable Energy Laboratory, and the Pacific Northwest National Laboratory.
 
 
-Much of my work is funded from partnerships with companies interested in the commercial applications of my research. Past projects have included substantial collaboration with industry partners in Hawai'i, where I [assembled the genome of a commercial <i>Nitzschia inconspicua</i> strain](/publications/AlgaeGenome2021) for the algaculture company [Global Algae](https://www.globalgae.com/) and explored the microbial communities in herbivorous fish guts with the mariculture firm [Ocean Era](http://ocean-era.com/). These academia-industry partnerships have kept my research grounded and enabled further impact beyond scientific publications.
+Much of my work is funded from partnerships with companies interested in the commercial applications of my research.
+Past projects have included substantial collaboration with industry partners in Hawai'i, where I
+[assembled the genome of a commercial <i>Nitzschia inconspicua</i> strain](/publications/AlgaeGenome2021)
+for the algaculture company [Global Algae](https://www.globalgae.com/)
+and explored the microbial communities in herbivorous fish guts with the mariculture firm [Ocean Era](http://ocean-era.com/).
+These academia-industry partnerships have kept my research grounded and enabled further impact beyond scientific publications.
 
 Personal history
 ------
-My initial dream job during college was a software engineer, and I worked as a computer science [instructional assistant](/teaching/) for two years in UC San Diego's Jacobs School of Engineering during undergrad. My specialty was the mathematical and theoretical bases of computer science. My topics of focus were algorithm design, discrete mathematics, probability, and runtime analyses. Through coursework, I became interested in the algorithms of genome assembly and sequence alignment, and moved away from theoretical computer science in favor of computational biology. I eventually got my bachelor's degree in Bioinformatics at UC San Diego before starting my PhD.
+My initial dream job during college was a software engineer, and I worked as an [instructional assistant](/teaching/) for two years in UC San Diego's Jacobs School of Engineering
+during undergrad. My specialty was the mathematical and theoretical bases of computer science. My topics of focus were [algorithm design], [discrete mathematics],
+probability, and [runtime analyses]. I became interested in the algorithms of genome assembly and sequence alignment during a course on advanced algorithms,
+and moved away from theoretical computer science in favor of computational biology.
+I eventually got my bachelor's degree in Bioinformatics at UC San Diego before starting my PhD.
 
-I'm a fifth generation San Diegan, and I've had the incredible opportunity to remain local throughout my education. My elementary, middle, high, undergraduate, and graduate schools have all been within a 2 mile radius!
+I'm a fifth generation San Diegan, and I've had the incredible opportunity to remain local throughout my education.
+My elementary, middle, high, undergraduate, and graduate schools have all been within a 2 mile radius!
 ![](images/map_schools.PNG)
