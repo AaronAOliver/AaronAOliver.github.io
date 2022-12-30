@@ -1,7 +1,7 @@
 ---
 title: "Diploid genomic architecture of <i>Nitzschia inconspicua</i>, an elite biomass production diatom"
 collection: publications
-permalink: /files/AlgaeGenome2021
+permalink: /publications/AlgaeGenome2021
 excerpt: 'The genome assembly and gene annotation of an industially-relevant diatom.'
 date: 2021-08-02
 venue: 'Scientific Reports'

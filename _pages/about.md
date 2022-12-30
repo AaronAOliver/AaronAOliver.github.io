@@ -14,19 +14,19 @@ My research
 ------
 My work lies at the intersection of bioinformatics, genomics, marine biology, and microbial ecology. 
 I use environmental genomics and transcriptomics to identify and quantify the metabolic potential of marine microorganisms. In particular,
-I look to apply bioinformatic methods towards solving big picture problems like sustainable energy production and climate resilience.  
-In prior work, I have [revealed the genetic factors that enable high-throughput algal biofuel strain](/publications/AlgaeGenome2021) and
+I look to apply bioinformatic methods towards tackling big picture problems like sustainable energy production and climate resilience.  
+ 
+In prior work, I have [revealed genetic factors improve suitability for biofuel production](/publications/AlgaeGenome2021) and
 [simulated the reaction of a keystone crustacean to the potential impacts of climate change](/publications/DaphniaPulicaria2022). 
-My current and future dissertation work is centered around algal polysaccharides and the microbes that degrade them, which has implications in
+My current and future dissertation work is centered around algal polysaccharides and the microbes that degrade them, which have implications in
 biofuel production, aquaculture, and marine ecosystem dynamics.  
 
 Collaboration in computational science
 ----
-Application include substantial collaboration with industry partners in Hawaii, [assembling the biofuel-relevant <i>Nitzschia inconspicua</i>] for the algaculture company [Global Algae](https://www.globalgae.com/) and exploring the microbial communities in herbivorous fish guts with the mariculture firm [Ocean Era](http://ocean-era.com/). 
+Throughout my research career, I have sought collaborations with a diverse array of academic, government, and industry partners. I believe high-throughput computational methods and the integration of big data into marine and microbial ecology will drive an explosion in the new discoveries. Thus, I find it crucial for bioinformaticians such as myself to collaborate with wet lab researchers and spread these methodological breakthroughs. These have included collaborations at UC San Diego with the labs of [Prof. Jon Shurin](https://shurinlab.biosci.ucsd.edu/) and [Prof. Stephen Mayfield](https://algae.ucsd.edu/mayfield/index.html), but also government labs at the [Joint Genome Institute](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html), National Renewable Energy Laboratory, and the Pacific Northwest National Laboratory.
 
-1. collaborate across labs at ucsd
-2. collaborate with government partners (jgi, pnnl, nrel)
-3. collaborate with industry partners
+
+Much of my work is funded due partnerships with companies interested in the commercial applications of my research. Past and current projects include substantial collaboration with industry partners in Hawaii, where I [assembled the genome of a commercial <i>Nitzschia inconspicua</i> strain] for the algaculture company [Global Algae](https://www.globalgae.com/) and explored the microbial communities in herbivorous fish guts with the mariculture firm [Ocean Era](http://ocean-era.com/). These academia-industry partnerships have kept my research grounded and enabled impact beyond scientific publications.
 
 Personal history
 ------

@@ -1,7 +1,7 @@
 ---
 title: "Phenotypic and transcriptional response of <i>Daphnia pulicaria</i> to the combined effects of temperature and predation"
 collection: publications
-permalink: /files/DaphniaPulicaria2022
+permalink: /publications/DaphniaPulicaria2022
 excerpt: 'Life history changes and differential gene expression of water fleas in response to high temperatures and presence of predators.'
 date: 2022-06-14
 venue: 'PLoS ONE'
