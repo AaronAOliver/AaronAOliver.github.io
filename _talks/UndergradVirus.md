@@ -15,5 +15,5 @@ Results from this project were also presented as part of a larger collaboration 
 in Ashburn, VA.
 
 Here is a beautiful electron microscopy picture of my own phage, Palm:
-<img src="Palm_EMPic.png" alt="virus" width="300"/>
+![virus](Palm_EMPic.png)
 
