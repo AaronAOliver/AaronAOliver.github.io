@@ -1,7 +1,7 @@
 ---
 title: "Diploid genomic architecture of <i>Nitzschia inconspicua</i>, an elite biomass production diatom"
 collection: publications
-permalink: /publication/AlgaeGenome2021.pdf
+permalink: /files/AlgaeGenome2021.pdf
 excerpt: 'A near-complete diploid nuclear genome and accompanying circular mitochondrial and chloroplast genomes have been assembled from the elite commercial diatom species <i>Nitzschia inconspicua.</i>'
 date: 2021-08-02
 venue: 'Scientific Reports'

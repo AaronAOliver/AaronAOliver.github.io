@@ -1,7 +1,7 @@
 ---
 title: "A genomic view of trophic and metabolic diversity in clade-specific <i>Lamellodysidea</i> sponge microbiomes"
 collection: publications
-permalink: /publication/SpongeMicrobes2020.pdf
+permalink: /files/SpongeMicrobes2020.pdf
 excerpt: 'Metagenome-assembled genomes of sponge symbionts off the coast of Guam.'
 date: 2020-06-23
 venue: 'Microbiome'
