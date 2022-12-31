@@ -10,7 +10,7 @@ I use environmental genomics and transcriptomics to identify and quantify the me
 I am interested in improving the efficiency of biofuel production and the sustainability of commercially grown algae using bioinformatic approaches.
 Much of my work is funded from partnerships with companies interested in the commercial applications of my research.
  
-In prior work, I have [revealed genetic factors that improve suitability for biofuel production](/publications/AlgaeGenome2021) and
+In prior work, I [characterized an algae farm's most productive strain](/publications/AlgaeGenome2021) and
 [simulated the reaction of a keystone crustacean to the potential impacts of climate change](/publications/DaphniaPulicaria2022). 
 My current and future dissertation work is centered around algal polysaccharides and the microbes that degrade them, which have implications in
 energy production, aquaculture, and marine ecosystem dynamics.  
@@ -41,5 +41,5 @@ Outside of my primary research projects, I have also collaborated with wet lab b
 In one project with the lab of ecologist [Prof. Jon Shurin](https://shurinlab.biosci.ucsd.edu/), I served as the primary bioinformatician and paired
 gene expression data with life history changes to explain the response of <i>Daphnia</i> crustaceans to rising temperatures and predation stress. In an ongoing collaboration with
 molecular biologist [Prof. Stephen Mayfield](https://algae.ucsd.edu/mayfield/index.html) and his lab, I am leveraging my experience with algae genomics to catalogue
-how the promoters of <i>Chlamydomonas</i> differ between species. I might also play a supportive role, like in one study where I supported research programmer [Dr. Sheila Podell](https://scholar.google.com/citations?user=YorpORcAAAAJ&hl=en)
+how the promoters of <i>Chlamydomonas</i> differ between species. I might also play a supportive role, as in one study where I supported research programmer [Dr. Sheila Podell](https://scholar.google.com/citations?user=YorpORcAAAAJ&hl=en)
 in her discovery of potential [microbial contributions to a sponge's ability to degrade halogenated compounds](/publications/SpongeMicrobes2020).
