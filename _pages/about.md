@@ -12,8 +12,7 @@ Hello! I'm Aaron, a PhD student at the University of California, San Diego in th
 at [Scripps Institution of Oceanography](https://scripps.ucsd.edu/). I work in the lab of [Prof. Eric Allen](https://eallen.scrippsprofiles.ucsd.edu/),
 which hosts researchers from both Scripps and UC San Diego's School of Biological Sciences.
 I leverage my background in computer science to explore communities of marine microorganisms <i>in silico</i> for potential applications in bioenergy and biotechnology.
-My research and teaching are driven by the belief that bioinformatic methods are often underutilized in marine biology, especially ecology. 
-
+My research and teaching are driven by the belief that bioinformatic methods are often underutilized in marine biology, especially in ecology. 
 
 Personal history
 ------
@@ -25,4 +24,5 @@ Before starting my PhD, I got my bachelor's degree in Bioinformatics at UC San D
 
 I'm a fifth generation San Diegan (Go Padres), and I've had the incredible opportunity to remain local throughout my education.
 My elementary, middle, high, undergraduate, and graduate schools have all been within a 2 mile radius!
+
 ![](images/map_schools.PNG)

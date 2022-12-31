@@ -38,7 +38,7 @@ Skills
   * (Meta-) Genomics
   * (Meta-) Transcriptomics
   * Phylogenetics
-  * Metabolic Models
+  * Amplicon Sequencing
   * Pipeline Management
 * Scientific Writing
 * Data Visualization
@@ -63,5 +63,5 @@ Talks
   
 Awards
 ======
-* Milton H. Saier Memorial Award for Outstanding Original Research in Computational Biology
-* Selma and Robert Silagi Award as the top graduating senior in the UC San Diego School of Biological Sciences
+* Milton H. Saier Memorial Award: Outstanding original research in computational biology
+* Selma and Robert Silagi Award: UC San Diego's top graduating senior in biology
