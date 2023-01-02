@@ -18,11 +18,11 @@ Personal history
 ------
 My initial dream job during college was a software engineer, and I worked as an [instructional assistant](/teaching/) for two years in UC San Diego's Jacobs School of Engineering
 during undergrad. My specialty was the theoretical bases of computer science, with a focus on [discrete mathematics](/teaching/CSE20), [algorithm design](/teaching/CSE101),
-and [computational complexity](/teaching/CSE21). I became interested in the algorithms of genome assembly and sequence alignment during a course on advanced algorithms,
+and [computational complexity](/teaching/CSE21). I became interested in genome assembly and sequence alignment during a course on advanced algorithms,
 and eventually moved away from computer science theory in favor of computational biology. 
 Before starting my PhD, I got my bachelor's degree in Bioinformatics at UC San Diego.
 
-I'm a fifth generation San Diegan (Go Padres), and I've had the incredible opportunity to remain local throughout my education.
+I'm a fifth generation San Diegan, and I've had the incredible opportunity to remain local throughout my education.
 My elementary, middle, high, undergraduate, and graduate schools have all been within a 2 mile radius!
 
 ![](images/map_schools.PNG)
