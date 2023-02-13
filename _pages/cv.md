@@ -25,23 +25,6 @@ Experience
   * UC San Diego, Jacobs School of Engineering
   * Supervisors: Professor Andrew B. Kahng, Professor Miles Jones
   
-Skills
-======
-* Programming
-  * Python (incl. scikit-learn)
-  * R
-  * Java
-  * C++
-  * Bash
-  * Git
-* Bioinformatics
-  * (Meta-) Genomics
-  * (Meta-) Transcriptomics
-  * Phylogenetics
-  * Amplicon Sequencing
-  * Pipeline Management
-* Scientific Writing
-* Data Visualization
 
 Publications
 ======
