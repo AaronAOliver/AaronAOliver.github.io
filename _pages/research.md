@@ -15,17 +15,14 @@ In prior work, I [characterized an algae farm's most productive strain](/publica
 My current and future dissertation work is centered around algal polysaccharides and the microbes that degrade them, which have implications in
 energy production, aquaculture, and marine ecosystem dynamics.  
 
-Automated monitoring of algae farms
+Improving algae farm productivity
 -----
 In one research project, I have collaborated with the Hawaiian algaculture company [Global Algae](https://www.globalgae.com/)
 to develop an system that monitors the microbiome of commercially grown algae. In the first stage of the project, I
 assembled the genome of a commercial <i>Nitzschia inconspicua</i> strain and revealed 
 the genetic factors that made this strain suitable for biofuel production. These genomic resources are publicly available at the Joint Genome Institute's
-[PhycoCosm portal](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html) to power future algal research.
-
-In the second stage of this project, I am building a pipeline for the automated processing of metatranscriptomic data from algae ponds. This would enable
-near real-time decision making regarding the evaluation of growth conditions and provide early warnings about bacterial and viral contamination. I am also
-using metatranscriptomic data to quantify how the diatom microbiome responds to different nutrient levels and other stresses.
+[PhycoCosm portal](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html) to power future algal research. In the second stage of this project,
+ I am also using metatranscriptomic data to quantify how the diatom microbiome responds to different nutrient levels and other stresses.
 
 Enzymatic degradation of macroalgal polysaccharides
 -----
