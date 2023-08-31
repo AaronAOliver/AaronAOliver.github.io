@@ -25,14 +25,14 @@ In prior work, I [characterized an algae farm's most productive strain](/publica
 My current and future dissertation work is centered around algal polysaccharides and the microbes that degrade them, which have implications in
 energy production, aquaculture, and marine ecosystem dynamics.  
 
-###Enzymatic degradation of macroalgal polysaccharides
+### Enzymatic degradation of macroalgal polysaccharides
 My dissertation work focuses on the sugars inside seaweeds, which are notoriously difficult to break down using physical or chemical treatments. I use the gut of the
 herbivorous [Hawaiian chub](https://www.marinelifephotography.com/fishes/chubs/kyphosus-hawaiiensis.htm) as a model system for studying the bacteria that degrade seaweeds in nature. This work is in parternship with the mariculture firm [Ocean Era](http://ocean-era.com/),
 who are excited by the potential discovery of novel enzymes that can degrade macroalgae. If successful, this work would enable the integration of partially digested
 seaweed compounds into commercial fish feed and improve the sustainability of aquaculture. Likewise, an more efficient method for algal decomposition improves
 the viability of seaweed-based biofuel production.
 
-###Improving algae farm productivity
+### Improving algae farm productivity
 In one research project, I have collaborated with the Hawaiian algaculture company [Global Algae](https://www.globalgae.com/)
 to develop an system that monitors the microbiome of commercially grown algae. In the first stage of the project, I
 assembled the genome of a commercial <i>Nitzschia inconspicua</i> strain and revealed 
@@ -40,7 +40,7 @@ the genetic factors that made this strain suitable for biofuel production. These
 [PhycoCosm portal](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html) to power future algal research. In the second stage of this project,
  I am also using metatranscriptomic data to quantify how the diatom microbiome responds to different nutrient levels and other stresses.
 
-###Bioinformatics support
+### Bioinformatics support
 Outside of my primary research projects, I have also collaborated with wet lab biologists to integrate computational approaches into their studies.
 In one project with the lab of ecologist [Prof. Jon Shurin](https://shurinlab.biosci.ucsd.edu/), I served as the primary bioinformatician and paired
 gene expression data with life history changes to explain the response of <i>Daphnia</i> crustaceans to rising temperatures and predation stress. In an ongoing collaboration with
