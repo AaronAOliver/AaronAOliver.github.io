@@ -12,15 +12,14 @@ Hello! I'm Aaron, a PhD student at the University of California, San Diego in th
 at [Scripps Institution of Oceanography](https://scripps.ucsd.edu/). I work in the lab of [Prof. Eric Allen](https://eallen.scrippsprofiles.ucsd.edu/),
 which hosts researchers from both Scripps and UC San Diego's School of Biological Sciences.
 I leverage my background in computer science to explore communities of marine microorganisms <i>in silico</i> for potential applications in bioenergy and biotechnology.
-My research and teaching are driven by the belief that bioinformatic methods are often underutilized in marine biology.
 
-## Personal history
 Before starting my PhD, I got my bachelor's degree in Bioinformatics at UC San Diego. I worked as an [instructional assistant](/teaching/) for two years in UC San Diego's Jacobs School of Engineering
 during undergrad. My specialty was the theoretical bases of computer science, with a focus on [discrete mathematics](/teaching/CSE20), [computational complexity](/teaching/CSE21), and [algorithm design](/teaching/CSE101).
-I became interested in genome assembly and sequence alignment during a course on advanced algorithms, and eventually moved away from pure computer science theory in favor of computational biology. 
+I became interested in genome assembly and sequence alignment during a course on advanced algorithms, and eventually moved away from teaching computer science theory in favor of computational biology research.
+
 
 ## Research Aims
-In prior work, I [characterized an algae farm's most productive strain](/publications/AlgaeGenome2021) and
+In prior work, I have [characterized an algae farm's most productive strain](/publications/AlgaeGenome2021) and
 [simulated the reaction of a keystone crustacean to the potential impacts of climate change](/publications/DaphniaPulicaria2022). 
 My current and future dissertation work is centered around algal polysaccharides and the microbes that degrade them, which have implications in
 energy production, aquaculture, and marine ecosystem dynamics.  
