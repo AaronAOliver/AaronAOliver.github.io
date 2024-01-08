@@ -47,5 +47,5 @@ in green algae, in preparation for genetic engineering and growth trials.
 ### Bioinformatics support
 Outside of my primary research projects, I also collaborate with wet lab biologists to integrate computational approaches into their studies. 
 These contributions often extend beyond my primary niches of algal and bacterial genomics. These projects include investigating 
-the [metabolic capacity of sponge microbiomes](/publications/SpongeMicrobes2020), the infection strategies of deep sea viruses, the responses 
+the [metabolic capacity of sponge microbiomes](/publications/SpongeMicrobes2020), the infection strategies of deep sea viruses, and the responses 
 of a keystone crustacean to [stresses associated with climate change](/publications/DaphniaPulicaria2022).
