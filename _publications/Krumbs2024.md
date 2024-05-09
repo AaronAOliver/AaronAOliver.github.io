@@ -6,7 +6,7 @@ excerpt: 'Genomic investigations of gut symbionts that unlock algal nutrients fo
 date: 2024-03-27
 venue: 'mBio'
 paperurl: ''
-citation: '<b>Oliver, A.</b>, Podell, S., Wegley Kelly, L. <i>et al.</i> Enrichable consortia of microbial symbionts degrade macroalgal polysaccharides in <i>Kyphosus</i> fish. </i>mBio</i> (2024).'
+citation: '<b>Oliver, A.</b>, Podell, S., Wegley Kelly, L. <i>et al.</i> Enrichable consortia of microbial symbionts degrade macroalgal polysaccharides in <i>Kyphosus</i> fish. <i>mBio</i> (2024).'
 ---
 Bioreactors inoculated with fish gut microbiomes maintain the genomic capacity to degrade seaweed polysaccharides <i>in vitro</i>. 
 
