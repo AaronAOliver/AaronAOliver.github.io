@@ -6,7 +6,7 @@ excerpt: 'The genome assembly and gene annotation of an industially-relevant dia
 date: 2021-08-02
 venue: 'Scientific Reports'
 paperurl: ''
-citation: '<b>Oliver, A.</b>, Podell, S., Pinowska, A. <i>et al.</i> Diploid genomic architecture of <i>Nitzschia inconspicua</i>, an elite biomass production diatom. <i>Sci Rep</i> 11, 15592 (2021).'
+citation: '<b>Oliver, A.</b>, Podell, S., Pinowska, A. <i>et al.</i> Diploid genomic architecture of <i>Nitzschia inconspicua</i>, an elite biomass production diatom. <i>Scientific Reports</i> (2021).'
 ---
 A near-complete diploid nuclear genome and accompanying circular mitochondrial and chloroplast genomes have been assembled from the elite commercial diatom species <i>Nitzschia inconspicua.</i>
 
