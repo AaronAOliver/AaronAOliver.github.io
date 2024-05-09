@@ -1,5 +1,5 @@
 ---
-title: "Herbivorous fish microbiome adaptations to sulfated dietary polysaccharides"
+title: "Enrichable consortia of microbial symbionts degrade macroalgal polysaccharides in <i>Kyphosus</i> fish"
 collection: publications
 permalink: /publications/Krumbs2024
 excerpt: 'Genomic investigations of gut symbionts that unlock algal nutrients for fish.'
