@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I'm Aaron, a PhD student at the University of California, San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb)
+Hello! I'm Aaron, a PhD candidate at the University of California, San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb)
 at Scripps Institution of Oceanography. I have worked in the lab of [Prof. Eric Allen](https://eallen.scrippsprofiles.ucsd.edu/) since 2018.
 I leverage my background in computer science to explore communities of marine microorganisms <i>in silico</i> for potential applications in bioenergy and biotechnology.
 
