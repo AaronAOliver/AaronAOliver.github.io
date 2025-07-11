@@ -2,7 +2,7 @@
 title: "Identification and overexpression of endogenous transcription factors to enhance lipid accumulation in the biotechnologically relevant species <i>Chlamydomonas pacifica</i>"
 collection: publications
 permalink: /publications/CpacTF2025
-excerpt: 'Increasing lipid output and shifting to biodiesel-friendly lipid profiles in commercially-grown microalgae strain.'
+excerpt: 'Increasing lipid output and shifting to biodiesel-friendly lipid profiles in a commercially-grown microalgae strain.'
 date: 2025-07-07
 venue: 'Algal Research'
 paperurl: ''
