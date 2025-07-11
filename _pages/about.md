@@ -39,7 +39,7 @@ As a bioinformatician in one branch of this project, I am harnessing information
 enable this extremophile tolerance. I also develop computational tools for genetic engineering of these algae strains, which enable [10-fold improvements in lipid production](/publications/CpacTF2025)
 and [microalgae that are able to degrade the microplastic polyethylene terephthalate](/publications/Recombinant2025).
 
-![10-fold increase in lipid production](/images/lipid_fig.png)
+![10-fold increase in lipid production](/images/lipid_fig.jpg)
 
 ### Microbial 'omics across environments
 Outside of my primary research projects, I also collaborate with wet lab biologists to integrate computational approaches into their studies. 
