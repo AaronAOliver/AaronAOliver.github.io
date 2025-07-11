@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I'm Aaron, a PhD candidate at the University of California, San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb)
+Hello! I'm Aaron, a PhD candidate at the University of California San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb)
 at Scripps Institution of Oceanography. I have worked in the lab of Scripps Department Chair and Deputy Director for Education Prof. Eric Allen since 2018.
 My research focuses on <i>in silico</i> analyses of marine microbial communities, with a specialization in the genomics of algae-associated microbiomes.
 
@@ -25,12 +25,14 @@ and academic research groups as both a generalist bioinformatician and a microbi
 My dissertation work focuses on the sugars inside seaweeds, which are notoriously difficult to break down using physical or chemical treatments. I use the gut of the
 [herbivorous Hawaiian chub](https://www.hawaiisfishes.com/fish_of_month/past_fom/fom_05_04.htm) as a model system for studying the bacteria that degrade wide varieties of algal sugars, which
 overcome a multitude of antimicrobial compounds released by stressed seaweeds. These microbial communities can survive for multiple weeks in single batch-fed bioreactors [(see my dissertation chapter)](/publications/Krumbs2024),
-enabling direct manipulation of seaweed-degrading microbiomes. Using this natural fish/bioreactor model system, my research provides a hollistic view of the temporal dynamics, microbiogeography, genome organization, and enzyme evolution 
+enabling direct manipulation of seaweed-degrading microbiomes. Using this natural fish/bioreactor model system, my research provides a comprehensive view of the temporal dynamics, microbiogeography, genome organization, and enzyme evolution 
 aspects of seaweed biomass consumption.
 
-![Seaweed biomass degradation microbiome](/images/Dynamics.png)
+| ![Seaweed biomass degradation microbiome](/images/Dynamics.png) | 
+|:--:| 
+| *Dissertation work: genome-resolved temporal dynamics of seaweed biomass composition by marine microbes* |
 
-### Microalgae genomics and genetic engineering toolkits
+### Microalgal genomics and genetic engineering toolkits
 I am also interested in developing genomic resources and genetic engineering platforms for commercially-relevant green microalgae strains. 
 I collaborate with molecular biologists at the [California Center for Algal Biotechnology](https://algae.ucsd.edu/) and the [J. Craig Venter Institute](https://www.jcvi.org/research/environmental-sustainability#projects)
 to catalog resillience of [novel <i>Chlamydomonas</i> strains](/publications/CpacGenome2025). Some strains display 
@@ -39,7 +41,9 @@ As a bioinformatician in one branch of this project, I am harnessing information
 enable this extremophile tolerance. I also develop computational tools for genetic engineering of these algae strains, which enable [10-fold improvements in lipid production](/publications/CpacTF2025)
 and [microalgae that are able to degrade the microplastic polyethylene terephthalate](/publications/Recombinant2025).
 
-![10-fold increase in lipid production](/images/lipid_fig.jpg)
+| ![10-fold increase in lipid production](/images/lipid_fig.jpg) | 
+|:--:| 
+| *Collaboration work: improving lipid accumulation in genetically engineered green microalgae* |
 
 ### Microbial 'omics across environments
 Outside of my primary research projects, I also collaborate with wet lab biologists to integrate computational approaches into their studies. 
@@ -63,3 +67,7 @@ the genetic factors that made this strain suitable for biofuel production. These
 I am also using metatranscriptomic data to quantify how the diatom microbiome responds to different nutrient levels and other stresses.
 
 In 2025 and 2026, I work with BASF on an ongoing [grant from the Department of Energy to halve the carbon footprint of industrial surfactant production](https://www.energy.gov/sites/default/files/2024-11/beto-MACRO-FOA-Scripps.pdf) using seaweed monosaccharides.
+
+| ![Novel GH86 enzymes](/images/mbio_enzyme.jpg) | 
+|:--:| 
+| *Public-private partnership: heterologous expression of novel marine enzymes (e.g. β-porphyranase) for biofoundries* |
