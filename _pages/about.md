@@ -21,7 +21,7 @@ My dissertation work is centered around the strategies used by microbes to degra
 have implications in aquaculture, carbon sequestration, and marine ecosystem dynamics. Parallel to my disseration, I partner with corporate R&D teams, government labs, 
 and academic research groups as both a generalist bioinformatician and a microbial genomics specialist.
 
-### Microbial collaboration in the degradation of macroalgal polysaccharides and toxins
+### Microbiome decomposition of macroalgal polysaccharides and antimicrobials
 My dissertation work focuses on the sugars inside seaweeds, which are notoriously difficult to break down using physical or chemical treatments. I use the gut of the
 [herbivorous Hawaiian chub](https://www.hawaiisfishes.com/fish_of_month/past_fom/fom_05_04.htm) as a model system for studying the bacteria that degrade wide varieties of algal sugars, which
 overcome a multitude of antimicrobial compounds released by stressed seaweeds. These microbial communities can survive for multiple weeks in single batch-fed bioreactors [(see my dissertation chapter)](/publications/Krumbs2024),
@@ -30,7 +30,7 @@ aspects of seaweed biomass consumption.
 
 | ![Seaweed biomass degradation microbiome](/images/Dynamics.png) | 
 |:--:| 
-| *Dissertation work: genome-resolved temporal dynamics of seaweed biomass composition by marine microbes* |
+| *Dissertation work: temporal dynamics of microbial enzymes that degrade seaweed sugars* |
 
 ### Microalgal genomics and genetic engineering toolkits
 I am also interested in developing genomic resources and genetic engineering platforms for commercially-relevant green microalgae strains. 
@@ -39,7 +39,7 @@ to catalog resillience of [novel <i>Chlamydomonas</i> strains](/publications/Cpa
 promising tolerance to temperature, pH, salt, and light conditions that limit the growth of similar algae used by algaculture farms.
 As a bioinformatician in one branch of this project, I am harnessing information encoded in their assembled genomes to identify genes that 
 enable this extremophile tolerance. I also develop computational tools for genetic engineering of these algae strains, which enable [10-fold improvements in lipid production](/publications/CpacTF2025)
-and [microalgae that are able to degrade the microplastic polyethylene terephthalate](/publications/Recombinant2025).
+and microalgae that are able to [degrade the microplastic polyethylene terephthalate](/publications/Recombinant2025).
 
 | ![10-fold increase in lipid production](/images/lipid_fig.jpg) | 
 |:--:| 
@@ -52,21 +52,13 @@ the [metabolic capacity of sponge microbiomes](/publications/SpongeMicrobes2020)
 and the responses of a keystone crustacean to [stresses associated with climate change](/publications/DaphniaPulicaria2022).
 
 ### Sustainable biotechnology
-I find it crucial to extend the impact of algal research through partnerships with Californian and Hawaiian biotechnology companies. So far, I have 
+I have partnered with Californian and Hawaiian biotechnology companies to extend the impact of my research. Much of my disseration work is done in tandem with applied scientists
+at the Kona mariculture firm [Ocean Era](http://ocean-era.com/), to use partially degraded macroalgal biomass as a sustainable feed for carnivorous fish farms. My work in green microalgae
+enables automated pathogen monitoring systems for the outdoor commercial ponds of Hawaiian algaculture company [Global Algae](https://www.globalgae.com/).
 
-This work is in parternship with the mariculture firm [Ocean Era](http://ocean-era.com/),
-who are excited by the [potential discovery of novel enzymes](/publications/Krumbs2023) that can degrade macroalgae. If successful, this work would enable the integration of partially digested
-seaweed compounds into commercial fish feed and improve the sustainability of aquaculture. Likewise, an more efficient method for algal decomposition improves
-the viability of seaweed-based biofuel production.
-
-In one research project, I have collaborated with the Hawaiian algaculture company [Global Algae](https://www.globalgae.com/)
-to develop an system that monitors the microbiome of commercially grown algae. [In the first stage of the project](/publications/AlgaeGenome2021), I
-assembled the genome of a commercial <i>Nitzschia inconspicua</i> strain and revealed 
-the genetic factors that made this strain suitable for biofuel production. These genomic resources are publicly available at the Joint Genome Institute's
-[PhycoCosm portal](https://phycocosm.jgi.doe.gov/Nithil2/Nithil2.home.html) to power future algal research. In the second stage of this project,
-I am also using metatranscriptomic data to quantify how the diatom microbiome responds to different nutrient levels and other stresses.
-
-In 2025 and 2026, I work with BASF on an ongoing [grant from the Department of Energy to halve the carbon footprint of industrial surfactant production](https://www.energy.gov/sites/default/files/2024-11/beto-MACRO-FOA-Scripps.pdf) using seaweed monosaccharides.
+More recently, I have build computational platforms for genetic manipulation of a proprietary strain used by [Algenesis Materials](https://www.algenesislabs.com/), a local 
+biomaterials startup that produces 100% biodegradable algae-based plastics. Current, I work with BASF on an ongoing [grant from the Department of 
+Energy to halve the carbon footprint of industrial surfactant production](https://www.energy.gov/sites/default/files/2024-11/beto-MACRO-FOA-Scripps.pdf) using marine enzymes indentified in my dissertation.
 
 | ![Novel GH86 enzymes](/images/mbio_enzyme.jpg) | 
 |:--:| 
