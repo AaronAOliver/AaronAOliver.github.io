@@ -9,10 +9,6 @@ redirect_from:
 
 {% include base_path %}
 
-Education
-======
-* Ph.D. in Marine Biology, UC San Diego, 2026 (expected)
-* B.S. in Biology with a Specialization in Bioinformatics, <i>summa cum laude</i>, UC San Diego, 2021
-   * Minor in Computer Science
+A copy of my CV can be downloaded here. If you have any trouble viewing the document, please email me for a copy.
 
-<a href="files/aaron_oliver_cv_july25.pdf" class="image fit">
+<iframe width="100%" height="680" src="files/aaron_oliver_cv_july25.pdf"></iframe>
