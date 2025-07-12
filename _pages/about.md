@@ -21,7 +21,7 @@ I love collaboration, so my time is split between many projects! My dissertation
 have implications in aquaculture, carbon sequestration, and marine ecosystem dynamics. Parallel to my disseration, I partner with corporate R&D teams, government labs, 
 and academic research groups as both a generalist bioinformatician and a microbial genomics specialist.
 
-| ![cascade](/images/cascade.png) | 
+| ![cascade](/images/summary_cascade.png) | 
 |:--:| 
 | *My study system: the defensive cascade of interactions between algal cells and their microbiomes* |
 
