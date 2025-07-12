@@ -21,6 +21,10 @@ I love collaboration, so my time is split between many projects! My dissertation
 have implications in aquaculture, carbon sequestration, and marine ecosystem dynamics. Parallel to my disseration, I partner with corporate R&D teams, government labs, 
 and academic research groups as both a generalist bioinformatician and a microbial genomics specialist.
 
+| ![cascade](/images/cascade.png) | 
+|:--:| 
+| *My study system: the defensive cascade of interactions between algal cells and their microbiomes* |
+
 ### Microbiome decomposition of macroalgal polysaccharides and antimicrobials
 My dissertation work focuses on the sugars inside seaweeds, which are notoriously difficult to break down using physical or chemical treatments. I use the gut of the
 [herbivorous Hawaiian chub](https://www.hawaiisfishes.com/fish_of_month/past_fom/fom_05_04.htm) as a model system for studying the bacteria that simultaneous degrade wide varieties of algal sugars and
