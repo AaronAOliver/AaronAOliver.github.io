@@ -9,28 +9,28 @@ redirect_from:
 ---
 
 Hello! I'm Aaron, a PhD candidate at the University of California San Diego in the [Center for Marine Biotechnology and Biomedicine](https://scripps.ucsd.edu/cmbb)
-at Scripps Institution of Oceanography. I have worked in the lab of Scripps Department Chair and Deputy Director for Education Prof. Eric Allen since 2018.
-My research focuses on <i>in silico</i> analyses of marine microbial communities, with a specialization in the genomics of algae-associated microbiomes.
+at Scripps Institution of Oceanography. I have worked in the lab of Scripps Department Chair Prof. Eric Allen since 2018.
+My research focuses on <i>in silico</i> analyses of marine microbial communities, with a specialization in the genomics of algae and their microbiomes.
 
 Before starting my PhD, I got my bachelor's degree in Bioinformatics at UC San Diego. I worked as an [instructional assistant](/teaching/) for two years in UC San Diego's Jacobs School of Engineering
 during undergrad. My specialty was the theoretical bases of computer science, with a focus on [discrete mathematics](/teaching/CSE20), [computational complexity](/teaching/CSE21), and [algorithm design](/teaching/CSE101).
 I leverage my background in computer science to explore communities of marine microorganisms for potential applications in biotechnology, bioenergy, and biomaterials.
 
 ## Research Aims
-My dissertation work is centered around the strategies used by microbes to degrade algal polysaccharides and defense chemicals. These enzymes and compounds
+I love collaboration, so my time is split between many projects! My dissertation is centered around the strategies used by microbes to degrade algal polysaccharides and defense chemicals. These enzymes and compounds
 have implications in aquaculture, carbon sequestration, and marine ecosystem dynamics. Parallel to my disseration, I partner with corporate R&D teams, government labs, 
 and academic research groups as both a generalist bioinformatician and a microbial genomics specialist.
 
 ### Microbiome decomposition of macroalgal polysaccharides and antimicrobials
 My dissertation work focuses on the sugars inside seaweeds, which are notoriously difficult to break down using physical or chemical treatments. I use the gut of the
-[herbivorous Hawaiian chub](https://www.hawaiisfishes.com/fish_of_month/past_fom/fom_05_04.htm) as a model system for studying the bacteria that degrade wide varieties of algal sugars, which
-overcome a multitude of antimicrobial compounds released by stressed seaweeds. These microbial communities can survive for multiple weeks in single batch-fed bioreactors [(see my dissertation chapter)](/publications/Krumbs2024),
-enabling direct manipulation of seaweed-degrading microbiomes. Using this natural fish/bioreactor model system, my research provides a comprehensive view of the temporal dynamics, microbiogeography, genome organization, and enzyme evolution 
-aspects of seaweed biomass consumption.
+[herbivorous Hawaiian chub](https://www.hawaiisfishes.com/fish_of_month/past_fom/fom_05_04.htm) as a model system for studying the bacteria that simultaneous degrade wide varieties of algal sugars and
+detoxify the antimicrobial compounds released by stressed seaweeds. These microbial communities can survive for multiple weeks in batch-fed bioreactors [(see my dissertation chapter)](/publications/Krumbs2024),
+enabling direct manipulation of seaweed-degrading microbiomes. Using this paired natural fish/bioreactor model system, my research provides a comprehensive view of the temporal dynamics, microbiogeography, genome organization, and enzyme evolution 
+behind seaweed biomass consumption.
 
 | ![Seaweed biomass degradation microbiome](/images/Dynamics.png) | 
 |:--:| 
-| *Dissertation work: temporal dynamics of microbial enzymes that degrade seaweed sugars* |
+| *Dissertation work: temporal dynamics of microbial enzyme cascades that degrade seaweed sugars* |
 
 ### Microalgal genomics and genetic engineering toolkits
 I am also interested in developing genomic resources and genetic engineering platforms for commercially-relevant green microalgae strains. 
@@ -52,13 +52,13 @@ the [metabolic capacity of sponge microbiomes](/publications/SpongeMicrobes2020)
 and the responses of a keystone crustacean to [stresses associated with climate change](/publications/DaphniaPulicaria2022).
 
 ### Sustainable biotechnology
-I have partnered with Californian and Hawaiian biotechnology companies to extend the impact of my research. Much of my disseration work is done in tandem with applied scientists
-at the Kona mariculture firm [Ocean Era](http://ocean-era.com/), to use partially degraded macroalgal biomass as a sustainable feed for carnivorous fish farms. My work in green microalgae
+I often partner with Californian and Hawaiian biotechnology companies to extend the impact of my research. Much of my disseration work is done in tandem with applied scientists
+at the Kona mariculture firm [Ocean Era](http://ocean-era.com/), to use partially degraded macroalgal biomass as a sustainable feed for carnivorous fish farms. My bioinformatics support work in green microalgae
 enables automated pathogen monitoring systems for the outdoor commercial ponds of Hawaiian algaculture company [Global Algae](https://www.globalgae.com/).
 
-More recently, I have build computational platforms for genetic manipulation of a proprietary strain used by [Algenesis Materials](https://www.algenesislabs.com/), a local 
-biomaterials startup that produces 100% biodegradable algae-based plastics. Current, I work with BASF on an ongoing [grant from the Department of 
-Energy to halve the carbon footprint of industrial surfactant production](https://www.energy.gov/sites/default/files/2024-11/beto-MACRO-FOA-Scripps.pdf) using marine enzymes indentified in my dissertation.
+More recently, I have built computational platforms for genetic manipulation of a proprietary algae strain used by [Algenesis](https://www.algenesislabs.com/), a local 
+biomaterials startup that produces 100% biodegradable algae-based plastics. Current, I work with [BASF's enzyme division](https://www.basf.com/us/en/media/smart-scientists/Enzymes) on an ongoing grant from the Department of 
+Energy to [halve the carbon footprint of industrial surfactant production](https://www.energy.gov/sites/default/files/2024-11/beto-MACRO-FOA-Scripps.pdf) using marine enzymes indentified in my dissertation.
 
 | ![Novel GH86 enzymes](/images/mbio_enzyme.jpg) | 
 |:--:| 
