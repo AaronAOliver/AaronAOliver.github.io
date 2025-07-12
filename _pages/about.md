@@ -28,7 +28,7 @@ detoxify the antimicrobial compounds released by stressed seaweeds. These microb
 enabling direct manipulation of seaweed-degrading microbiomes. Using this paired natural fish/bioreactor model system, my research provides a comprehensive view of the temporal dynamics, microbiogeography, genome organization, and enzyme evolution 
 behind seaweed biomass consumption.
 
-| ![mpCGC](/images/mpcgc.png) | 
+| ![mpCGC](/images/mpcgc.jpg) | 
 |:--:| 
 | *Dissertation work: a pipeline for identifying macroalgal polysaccharide degradation gene clusters* |
 
