@@ -39,19 +39,13 @@ to catalog resillience of [novel <i>Chlamydomonas</i> strains](/publications/Cpa
 promising tolerance to temperature, pH, salt, and light conditions that limit the growth of similar algae used by algaculture farms.
 As a bioinformatician in one branch of this project, I am harnessing information encoded in their assembled genomes to identify genes that 
 enable this extremophile tolerance. I also develop computational tools for genetic engineering of these algae strains, which enable [10-fold improvements in lipid production](/publications/CpacTF2025)
-and microalgae that are able to [degrade the microplastic polyethylene terephthalate](/publications/Recombinant2025).
+and microalgae that are able to [degrade polyethylene terephthalate microplastics](/publications/Recombinant2025).
 
 | ![10-fold increase in lipid production](/images/lipid_fig.jpg) | 
 |:--:| 
 | *Collaboration work: improving lipid accumulation in genetically engineered green microalgae* |
 
-### Microbial 'omics across environments
-Outside of my primary research projects, I also collaborate with wet lab biologists to integrate computational approaches into their studies. 
-These contributions often extend beyond my primary niches of algal-associated genomics. These projects include investigating 
-the [metabolic capacity of sponge microbiomes](/publications/SpongeMicrobes2020), the infection strategies of deep sea viruses, elephant pathogens in Botswana,
-and the responses of a keystone crustacean to [stresses associated with climate change](/publications/DaphniaPulicaria2022).
-
-### Sustainable biotechnology
+### Sustainable biotechnology applications
 I often partner with Californian and Hawaiian biotechnology companies to extend the impact of my research. Much of my disseration work is done in tandem with applied scientists
 at the Kona mariculture firm [Ocean Era](http://ocean-era.com/), to use partially degraded macroalgal biomass as a sustainable feed for carnivorous fish farms. My bioinformatics support work in green microalgae
 enables automated pathogen monitoring systems for the outdoor commercial ponds of Hawaiian algaculture company [Global Algae](https://www.globalgae.com/).
@@ -63,3 +57,9 @@ Energy to [halve the carbon footprint of industrial surfactant production](https
 | ![Novel GH86 enzymes](/images/mbio_enzyme.jpg) | 
 |:--:| 
 | *Public-private partnership: heterologous expression of novel marine enzymes (e.g. β-porphyranase) for biofoundries* |
+
+### Microbial 'omics across environments
+Outside of my primary research projects, I also collaborate with wet lab biologists to integrate computational approaches into their studies. 
+These contributions often extend beyond my primary niches of algal-associated genomics. These projects include investigating 
+the [metabolic capacity of sponge microbiomes](/publications/SpongeMicrobes2020), the infection strategies of deep sea viruses, elephant pathogens in Botswana,
+and the responses of a keystone crustacean to [stresses associated with climate change](/publications/DaphniaPulicaria2022).
