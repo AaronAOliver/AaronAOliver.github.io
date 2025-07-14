@@ -41,7 +41,7 @@ I am also interested in developing genomic resources and genetic engineering pla
 I collaborate with molecular biologists at the [California Center for Algal Biotechnology](https://algae.ucsd.edu/) and the [J. Craig Venter Institute](https://www.jcvi.org/research/environmental-sustainability#projects)
 to catalog resillience of [novel <i>Chlamydomonas</i> strains](/publications/CpacGenome2025). Some strains display 
 promising tolerance to temperature, pH, salt, and light conditions that limit the growth of similar algae used by algaculture farms.
-As a bioinformatician in one branch of this project, I am harnessing information encoded in their assembled genomes to identify genes that 
+As a bioinformatician in one branch of this project, I harness information encoded in their assembled genomes to identify genes that 
 enable this extremophile tolerance. I also develop computational tools for genetic engineering of these algae strains, which enable [10-fold improvements in lipid production](/publications/CpacTF2025)
 and microalgae that are able to [degrade polyethylene terephthalate microplastics](/publications/Recombinant2025).
 
