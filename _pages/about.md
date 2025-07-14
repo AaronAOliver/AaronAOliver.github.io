@@ -12,7 +12,7 @@ Hello! I'm Aaron, a PhD candidate at the University of California San Diego in t
 at Scripps Institution of Oceanography. I have worked in the lab of Scripps Department Chair Prof. Eric Allen since 2018.
 My research focuses on <i>in silico</i> analyses of marine microbial communities, with a specialization in the genomics of algae and their microbiomes.
 
-Before starting my PhD, I got my bachelor's degree in Bioinformatics at UC San Diego. I worked as an [instructional assistant](/teaching/) for two years in UC San Diego's Jacobs School of Engineering
+Before starting my PhD, I got my bachelor's degree in Bioinformatics at UC San Diego. I worked as an [instructional assistant](/teaching/) for two years at the Jacobs School of Engineering
 during undergrad. My specialty was the theoretical bases of computer science, with a focus on [discrete mathematics](/teaching/CSE20), [computational complexity](/teaching/CSE21), and [algorithm design](/teaching/CSE101).
 I leverage my background in computer science to explore communities of marine microorganisms for potential applications in biotechnology, bioenergy, and biomaterials.
 
