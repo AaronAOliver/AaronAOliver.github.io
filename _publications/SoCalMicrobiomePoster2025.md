@@ -1,7 +1,7 @@
 ---
 title: "Functional guilds of seaweed degradation & detoxification by algivorous fish gut microbiota"
 collection: publications
-permalink: /publications/Methanogens2025
+permalink: /publications/SoCalMicrobiomePoster2025
 excerpt: 'How does a seaweed-degrading microbiome change as biomass is degraded?'
 date: 2025-09-19
 venue: '11th Annual Southern California Microbiome Symposium'
