@@ -19,25 +19,25 @@ If you are interested in this topic, I suggest reading some of my prior work on 
 
 As well as some work on <i>Kyphosus</i> and seaweed microbiota by other scholars:
 
-[Clements, K.D. <i>et al.</i> Intestinal microbiota in fishes: what's known and what's not. Mol Ecol, 2014. https://doi.org/10.1111/mec.12699](https://doi.org/10.1111/mec.12699)
+[Clements, K.D. <i>et al.</i> Intestinal microbiota in fishes: what's known and what's not. <i>Mol Ecol</i>, 2014. https://doi.org/10.1111/mec.12699](https://doi.org/10.1111/mec.12699)
 
-[Sparagon, W.J. <i>et al.</i> Fine scale transitions of the microbiota and metabolome along the gastrointestinal tract of herbivorous fishes. anim microbiome, 2022. https://doi.org/10.1186/s42523-022-00182-z](https://doi.org/10.1186/s42523-022-00182-z)
+[Sparagon, W.J. <i>et al.</i> Fine scale transitions of the microbiota and metabolome along the gastrointestinal tract of herbivorous fishes. <i>anim microbiome</i>, 2022. https://doi.org/10.1186/s42523-022-00182-z](https://doi.org/10.1186/s42523-022-00182-z)
 
-[Mountfort, D.O. <i>et al.</i> (2002. Hindgut Fermentation in Three Species of Marine Herbivorous Fish. Appl Environ Microbiol, 2002. https://doi.org/10.1128/AEM.68.3.1374-1380.2002](https://doi.org/10.1128/AEM.68.3.1374-1380.2002)
+[Mountfort, D.O. <i>et al.</i> (2002. Hindgut Fermentation in Three Species of Marine Herbivorous Fish. <i>Appl Environ Microbiol</i>, 2002. https://doi.org/10.1128/AEM.68.3.1374-1380.2002](https://doi.org/10.1128/AEM.68.3.1374-1380.2002)
 
-[Khan, T. <i>et al.</i> Functional guilds and drivers of diversity in seaweed-associated bacteria, FEMS Microbes, 2024. https://doi.org/10.1093/femsmc/xtad023](https://doi.org/10.1093/femsmc/xtad023)
+[Khan, T. <i>et al.</i> Functional guilds and drivers of diversity in seaweed-associated bacteria, <i>FEMS Microbes</i>, 2024. https://doi.org/10.1093/femsmc/xtad023](https://doi.org/10.1093/femsmc/xtad023)
 
-[Lapébie, P. <i>et al.</i> Bacteroidetes use thousands of enzyme combinations to break down glycans. Nat Commun, 2019. https://doi.org/10.1038/s41467-019-10068-5](https://doi.org/10.1038/s41467-019-10068-5)
+[Lapébie, P. <i>et al.</i> Bacteroidetes use thousands of enzyme combinations to break down glycans. <i>Nat Commun</i>, 2019. https://doi.org/10.1038/s41467-019-10068-5](https://doi.org/10.1038/s41467-019-10068-5)
 
-Detailed information on feedstock conditions:
 
+Supplemental information:
 
 | ![feedstock](/images/feedstock.png) | 
 |:--:| 
 | *The feedstocks used in this project* |
 
 
-| ![bioinformatics](/images/feedstock.png) | 
+| ![bioinformatics](/images/bioinfo.png) | 
 |:--:| 
 | *The bioinformatic tools used in this project* |
 
