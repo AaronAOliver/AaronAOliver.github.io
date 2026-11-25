@@ -1,0 +1,404 @@
+---
+title: "Microbial guilds that detoxify and depolymerize seaweed"
+subtitle: "Genome-resolved metatranscriptomics of *Kyphosus cinerascens* gut microcosms"
+description: "Time-series metatranscriptomics of in vitro gut microcosms: which MAGs express CAZymes, sulfatases and polyphenol-degrading enzymes, and when."
+image: assets/thumbs/enrichments.png
+date: 2026-06-24
+categories: [metatranscriptomics, MAGs, time series, R]
+author: "Aaron Oliver"
+format:
+  html:
+    body-classes: nb-rmd
+    number-sections: true
+---
+
+```{r setup}
+#| include: false
+source("_common.R")
+suppressPackageStartupMessages({ library(ape); library(ggtree); library(ggtreeExtra); library(ggnewscale) })
+ed <- function(...) repo_path("Enrichments_metatranscriptomics", ...)
+```
+
+::: {.paper-links}
+[Paper: Plominsky, Oliver *et al.* 2026, *mBio*](https://doi.org/10.1128/mbio.03382-25)
+[Code: Enrichments_metatranscriptomics](https://github.com/AaronAOliver/Enrichments_metatranscriptomics)
+[Data: MAGs on Zenodo](https://doi.org/10.5281/zenodo.18273293)
+[SRA PRJNA1404287](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1404287)
+:::
+
+Seaweed is hard to digest for two reasons. Its polysaccharides are diverse and
+sulfated, and it contains polyphenols (phlorotannins and their breakdown
+products) that inhibit microbial growth and enzymes. Hindgut contents from six
+*Kyphosus cinerascens* fish were used to start anaerobic in vitro microcosms
+fed different combinations of macroalgal and host-associated media. Four of
+these kept 96 to 99% of the active hindgut families. They were sampled on days 3,
+8 and 16 for paired metagenomics and metatranscriptomics.
+
+Mapping RNA reads back to MAGs shows which genome expresses which enzyme, and
+when. The early colonists detoxify polyphenols and degrade alginate. Later
+guilds take on the more recalcitrant sulfated polysaccharides.
+
+This repository contains my part of the study: the genome-resolved expression
+analysis and the figures built from it.
+
+```{r load}
+mag_info <- read.delim(ed("data", "microcosm_mag_info.txt"), check.names = FALSE) %>%
+  filter(taxa != "Unclassified")
+# one taxonomy per dereplicated population (bin_taxonomy.tab lists every member bin,
+# and one population's members disagree, so it would double-count in a join)
+parent_tax <- select(mag_info, parent_bin = bin, taxonomy = taxa)
+map_rate <- read.delim(ed("data", "mapping_rate.tab"))
+
+samples_ord <- c("FISH_1","FISH_2","FISH_3","FISH_4","FISH_5","FISH_6","T0_AVG",
+                 "M30_T03","M30_T08","M30_T16","M36_T03","M36_T08","M36_T16",
+                 "M75_T03","M75_T08","M75_T16","M78_T03","M78_T08","M78_T16")
+sample_meta <- tibble(sample = samples_ord) %>%
+  mutate(group = case_when(str_starts(sample, "FISH") ~ "Wild hindgut",
+                           sample == "T0_AVG" ~ "Inoculum (T0)",
+                           TRUE ~ str_extract(sample, "^M\\d+")),
+         day = case_when(sample == "T0_AVG" ~ 0,
+                         str_starts(sample, "M") ~ as.numeric(str_extract(sample, "\\d+$")),
+                         TRUE ~ NA_real_))
+tax_cols_mt <- tax_colors[c("Alphaproteobacteria","Bacillota","Bacteroidota","Candidatus Tefagiota",
+                            "Desulfobacterota","Fusobacteriota","Gammaproteobacteria",
+                            "Spirochaetota","Verrucomicrobiota")]
+```
+
+```{r summary-table}
+tibble(
+  Quantity = c("MAGs binned from fish, inoculum and microcosms", "Dereplicated populations used for read mapping",
+               "Metatranscriptomes (6 fish, inoculum, 4 microcosms x 3 days)", "RNA reads that map to MAGs"),
+  Value = c("1,153", "471", length(samples_ord),
+            sprintf("%.0f to %.0f%%", min(map_rate$map_rate), max(map_rate$map_rate)))
+) %>% knitr::kable(align = "lr")
+```
+
+## Approach
+
+```{mermaid}
+flowchart LR
+  F[6 hindguts] --> I[Pooled inoculum] --> M[4 microcosms<br/>days 3, 8, 16]
+  M --> G[Metagenomes<br/>1,153 MAGs<br/>dRep: 471 populations]
+  M --> T[Metatranscriptomes<br/>Bowtie2 + RSEM]
+  G --> A[dbCAN, SulfAtlas,<br/>CAMPER]
+  A --> N[TPM per gene, scaled<br/>by mapping rate]
+  T --> N
+```
+
+All samples (fish, inoculum and microcosms) were sequenced for both
+metagenomes and metatranscriptomes.
+
+Only `r sprintf("%.0f to %.0f%%", min(map_rate$map_rate), max(map_rate$map_rate))` of reads in each sample map to the binned genomes. Raw TPMs are
+therefore scaled by each sample's mapping rate, so that expression is
+comparable between samples with different binning coverage. This was the core
+normalization step in the original analysis:
+
+```{r normalization-code}
+#| eval: false
+#| echo: true
+#| code-fold: false
+# Scale RSEM TPMs by the fraction of reads that are MAG-resolved
+rsem_norm <- rsem
+for (samp in sample_list) {
+  rate <- dplyr::filter(mapping_rate, sample == samp)$map_rate * 0.01
+  rsem_norm[[samp]] <- rsem_norm[[samp]] * rate + 1e-8
+}
+# Collapse the four T0 replicates into a single inoculum profile
+rsem_norm$T0_AVG <- rowMeans(rsem_norm[, c("T0_A", "T0_B", "T0_C", "T0_D")])
+```
+
+```{r mapping-rate}
+#| fig-height: 3.2
+map_rate %>%
+  filter(sample %in% samples_ord | str_starts(sample, "T0")) %>%
+  mutate(sample = factor(sample, levels = unique(c(samples_ord[1:6], sort(sample[str_starts(sample, "T0")]),
+                                                   samples_ord[8:19])))) %>%
+  mutate(Group = case_when(str_starts(sample, "FISH") ~ "Wild hindgut",
+                           str_starts(sample, "T0") ~ "Inoculum (T0 replicates)",
+                           TRUE ~ "Microcosm"),
+         Group = factor(Group, levels = c("Wild hindgut", "Inoculum (T0 replicates)", "Microcosm"))) %>%
+  plot_ly(x = ~sample, y = ~map_rate, color = ~Group, type = "bar",
+          colors = c("Wild hindgut" = "#4ea3ff", "Inoculum (T0 replicates)" = "#9aa3b2", Microcosm = site_teal),
+          hovertemplate = "%{x}: %{y:.1f}% of reads map to MAGs<extra></extra>") %>%
+  layout(xaxis = list(title = "", tickangle = -45), yaxis = list(title = "% of reads mapped to MAGs", ticksuffix = "%"),
+         legend = list(orientation = "h", y = 1.15)) %>%
+  dark_layout()
+```
+
+## The 471 populations
+
+The tree shows the dereplicated MAG populations. The rings give each genome's
+count of red-algal CAZymes, brown-algal CAZymes, sulfatases and
+polyphenol-degrading genes. Bacteroidota and Verrucomicrobiota carry the most
+sulfatases, about 20 per genome on average. Phloroglucinol and caffeate
+degradation genes are spread more widely, and Gammaproteobacteria carry the
+most per genome.
+
+```{r tree}
+#| fig-height: 7
+#| fig-width: 10
+#| fig-cap: "Phylogeny of the 471 dereplicated MAG populations with gene-count rings."
+env <- new.env()
+suppressWarnings(load(ed(".RData"), envir = env))
+tree <- env$tree
+hl <- env$hilight_table %>% select(node = node_id, Taxonomy)
+
+rings <- mag_info %>%
+  transmute(bin,
+            `Red algal CAZymes` = `red algal CAZy`, `Brown algal CAZymes` = `brown algal CAZy`,
+            Sulfatases = sulfatase, `Polyphenol degradation` = `all phloroglucinol` + `caffeic acid degradation`) %>%
+  pivot_longer(-bin, names_to = "Genes", values_to = "count") %>%
+  mutate(Genes = factor(Genes, levels = c("Red algal CAZymes", "Brown algal CAZymes",
+                                          "Sulfatases", "Polyphenol degradation")))
+
+ggtree(tree, layout = "fan", open.angle = 10, colour = "grey75", linewidth = .2) +
+  geom_highlight(data = hl, aes(node = node, fill = Taxonomy), alpha = .85, to.bottom = TRUE,
+                 extendto = max(ape::node.depth.edgelength(tree)) * 1.02) +
+  scale_fill_manual(values = tax_colors, name = "MAG taxonomy", guide = guide_legend(ncol = 2, order = 1)) +
+  new_scale_fill() +
+  geom_fruit(data = rings, geom = geom_bar, stat = "identity", orientation = "y",
+             mapping = aes(x = count, y = bin, fill = Genes), pwidth = .45, offset = .05) +
+  scale_fill_manual(values = c("indianred1", "#b38f3a", "gold", "#8cd2d5"), name = "Gene class",
+                    guide = guide_legend(ncol = 2, order = 2)) +
+  theme(plot.background = element_rect(fill = site_bg, colour = NA),
+        panel.background = element_rect(fill = site_bg, colour = NA),
+        legend.background = element_rect(fill = site_bg, colour = NA),
+        legend.key = element_rect(fill = site_bg, colour = NA),
+        legend.text = element_text(colour = site_text, size = 11),
+        legend.title = element_text(colour = site_text, size = 12, face = "bold"),
+        legend.key.size = unit(.45, "cm"),
+        legend.position = "right", legend.box = "vertical",
+        plot.margin = margin(-0.6, 0, -0.6, -0.6, "in"))   # trim the empty margin ggtree leaves around a fan
+```
+
+### Enrichment in culture
+
+Each point is a MAG population, placed by its relative abundance in the wild
+hindgut (x) and its peak abundance in any microcosm sample (y). Points above the
+diagonal were enriched by cultivation. Point size is the number of algal
+CAZymes and sulfatases, and populations that were never detected are drawn at
+10<sup>-6</sup>. Hover over a point to see its enzyme toolkit.
+
+```{r enrichment-scatter}
+#| fig-height: 5.5
+mag_info %>%
+  mutate(across(c(Natural, Microcosm), ~ pmax(.x, 1e-6)),
+         label = paste0("<b>", bin, "</b><br>", taxa,
+                        "<br>Red-algal CAZymes: ", `red algal CAZy`,
+                        "<br>Brown-algal CAZymes: ", `brown algal CAZy`,
+                        "<br>Sulfatases: ", sulfatase,
+                        "<br>Phloroglucinol genes: ", `all phloroglucinol`,
+                        "<br>Caffeate genes: ", `caffeic acid degradation`)) %>%
+  plot_ly(x = ~Natural, y = ~Microcosm, color = ~taxa, colors = tax_cols_mt,
+          size = ~ sulfatase + `brown algal CAZy` + `red algal CAZy` + 1, sizes = c(5, 30),
+          type = "scatter", mode = "markers", text = ~label, hoverinfo = "text",
+          marker = list(opacity = .75, line = list(width = .4, color = "#111"))) %>%
+  layout(xaxis = list(type = "log", title = "Relative abundance in wild hindgut", exponentformat = "power"),
+         yaxis = list(type = "log", title = "Peak relative abundance in microcosms", exponentformat = "power"),
+         legend = list(itemsizing = "constant", title = list(text = "<b>Phylum</b>")),
+         shapes = list(list(type = "line", x0 = 1e-6, y0 = 1e-6, x1 = 1, y1 = 1, xref = "x", yref = "y",
+                            line = list(dash = "dot", color = "#888"))),
+         annotations = list(list(x = -0.35, y = -0.85, xref = "x", yref = "y", text = "1:1",
+                                 showarrow = FALSE, font = list(color = "#777", size = 11)))) %>%
+  dark_layout()
+```
+
+The table lists the `r nrow(mag_info)` populations with a phylum assignment.
+
+```{r mag-table}
+mag_info %>%
+  select(MAG = bin, Taxonomy = taxa, `Red algal CAZymes` = `red algal CAZy`,
+         `Brown algal CAZymes` = `brown algal CAZy`, Sulfatases = sulfatase,
+         `Phloroglucinol reductase` = `phloroglucinol reductase`,
+         `Caffeate degradation` = `caffeic acid degradation`, Catalase = catalase,
+         Dehalogenase = dehalogenase, `Wild hindgut` = Natural, `Microcosm max` = Microcosm) %>%
+  nb_table(page = 8) %>%
+  formatPercentage(c("Wild hindgut", "Microcosm max"), digits = 2)
+```
+
+## Expression of CAZymes and sulfatases over time
+
+The plot below sums CAZyme and sulfatase TPM for each MAG population, grouped by
+phylum, and follows each microcosm from the inoculum to day 16. Choose a
+microcosm with the buttons.
+
+```{r cazy-area}
+#| fig-height: 5
+cs <- read.csv(ed("parent_bin_cazy_sulf.csv"), check.names = FALSE) %>%
+  pivot_longer(-parent_bin, names_to = "sample", values_to = "tpm") %>%
+  left_join(parent_tax, by = "parent_bin") %>%
+  filter(!is.na(taxonomy), taxonomy != "Unclassified")
+
+micro <- c("M30", "M36", "M75", "M78")
+area <- map_dfr(micro, function(m) {
+  cs %>% filter(sample == "T0_AVG" | str_starts(sample, m)) %>%
+    mutate(microcosm = m, day = if_else(sample == "T0_AVG", 0, as.numeric(str_extract(sample, "\\d+$"))))
+}) %>% group_by(microcosm, day, taxonomy) %>% summarise(tpm = sum(tpm), .groups = "drop")
+
+taxa_present <- intersect(names(tax_cols_mt), unique(area$taxonomy))
+fig <- plot_ly()
+for (m in micro) for (tx in taxa_present) {
+  d <- filter(area, microcosm == m, taxonomy == tx) %>% arrange(day)
+  fig <- add_trace(fig, data = d, x = ~day, y = ~tpm, name = tx, type = "scatter", mode = "lines",
+                   stackgroup = "one", line = list(width = .5, color = tax_cols_mt[[tx]]),
+                   fillcolor = tax_cols_mt[[tx]], legendgroup = tx, showlegend = TRUE,
+                   visible = m == micro[1],
+                   hovertemplate = paste0(tx, "<br>day %{x}: %{y:,.0f} TPM<extra></extra>"))
+}
+nt <- length(taxa_present)
+btns <- lapply(seq_along(micro), function(i)
+  list(method = "update", label = micro[i],
+       args = list(list(visible = rep(seq_along(micro) == i, each = nt)),
+                   list(title = list(text = paste("Microcosm", micro[i]), font = list(size = 13), x = .99, xanchor = "right")))))
+fig %>%
+  layout(updatemenus = list(list(type = "buttons", direction = "right", buttons = btns,
+                                 x = 0, y = 1.15, xanchor = "left", bgcolor = "#dfe5ec", bordercolor = "#8a93a3", font = list(color = "#111"))),
+         title = list(text = "Microcosm M30", font = list(size = 13), x = .99, xanchor = "right"), margin = list(t = 70),
+         xaxis = list(title = "Day", tickvals = c(0, 3, 8, 16), ticktext = c("T0", "3", "8", "16")),
+         yaxis = list(title = "CAZyme + sulfatase TPM"),
+         legend = list(title = list(text = "<b>Phylum</b>"))) %>%
+  dark_layout()
+```
+
+### Share of each genome's transcription spent on these enzymes
+
+For every MAG with at least 100 TPM in a sample, the plot shows the share of
+its expression that goes to CAZymes, sulfatases or detoxification genes. At
+their peak, individual Bacteroidota and Verrucomicrobiota MAGs put 5 to 7%
+of their transcription into sulfatases. One Bacillota MAG puts over 20% into
+detoxification genes.
+
+```{r pct-expression}
+#| fig-height: 5.5
+pct <- bind_rows(
+  read.delim(ed("cazy_expression_short.tab")) %>% mutate(set = "CAZymes"),
+  read.delim(ed("sulf_expression_short.tab")) %>% mutate(set = "Sulfatases"),
+  read.delim(ed("detox_expression_short.tab")) %>% mutate(set = "Detoxification")
+) %>% filter(!is.na(taxonomy), taxonomy != "Unclassified") %>%
+  mutate(sample = factor(sample, levels = samples_ord))
+
+sets <- c("CAZymes", "Sulfatases", "Detoxification")
+set.seed(2)
+pct <- pct %>% mutate(xj = as.numeric(sample) + runif(n(), -.32, .32))
+fig <- plot_ly()
+for (s in sets) {
+  fig <- add_trace(fig, data = filter(pct, set == s), x = ~xj, y = ~pct_relevant,
+                   color = ~taxonomy, colors = tax_cols_mt, type = "scatter", mode = "markers",
+                   marker = list(size = 6, opacity = .75), visible = s == sets[1],
+                   legendgroup = ~taxonomy, showlegend = TRUE,
+                   text = ~paste0("<b>", parent_bin, "</b><br>", taxonomy, "<br>", sample,
+                                  "<br>", round(100 * pct_relevant, 2), "% of MAG expression",
+                                  "<br>MAG total: ", round(tpm_total), " TPM"),
+                   hoverinfo = "text")
+}
+ntx <- n_distinct(pct$taxonomy)
+btns <- lapply(seq_along(sets), function(i)
+  list(method = "update", label = sets[i],
+       args = list(list(visible = rep(seq_along(sets) == i, each = ntx)),
+                   list(title = list(text = paste("Share of expression:", sets[i]), font = list(size = 13), x = .99, xanchor = "right")))))
+fig %>%
+  layout(updatemenus = list(list(type = "buttons", direction = "right", buttons = btns, x = 0, y = 1.15,
+                                 xanchor = "left", bgcolor = "#dfe5ec", bordercolor = "#8a93a3", font = list(color = "#111"))),
+         title = list(text = "Share of expression: CAZymes", font = list(size = 13), x = .99, xanchor = "right"), margin = list(t = 70),
+         xaxis = list(title = "", tickvals = seq_along(samples_ord), tickangle = -60,
+                      ticktext = replace(samples_ord, samples_ord == "T0_AVG", "Inoculum")),
+         yaxis = list(title = "% of the MAG's expression", tickformat = ".0%"),
+         legend = list(title = list(text = "<b>Phylum</b>")),
+         shapes = lapply(c(6.5, 7.5, 10.5, 13.5, 16.5), function(x)
+           list(type = "line", x0 = x, x1 = x, y0 = 0, y1 = 1, yref = "paper",
+                line = list(color = "#bbb", width = 1)))) %>%
+  dark_layout()
+```
+
+### Genomic potential vs. realized expression
+
+The x-axis is the fraction of the genome that encodes each enzyme class. The
+y-axis is the highest fraction of that MAG's transcripts in any sample. Points
+near the dotted line express an enzyme class in proportion to its gene count.
+
+```{r potential-vs-expression}
+#| fig-height: 5
+mp <- read.delim(ed("max_pct_1k.tab"), check.names = FALSE) %>% rename(taxonomy = `taxonomic group`) %>%
+  filter(taxonomy != "Unclassified")
+pairs <- list(CAZymes = c("pct_cazy_genome", "max_cazy_pct"),
+              Sulfatases = c("pct_sulf_genome", "max_sulf_pct"),
+              Detoxification = c("pct_detox_genome", "max_detox_pct"))
+fig <- plot_ly()
+for (s in names(pairs)) {
+  d <- mp %>% transmute(bin, taxonomy, x = .data[[pairs[[s]][1]]], y = .data[[pairs[[s]][2]]]) %>%
+    filter(!is.na(y))
+  fig <- add_trace(fig, data = d, x = ~x, y = ~y, color = ~taxonomy, colors = tax_cols_mt,
+                   type = "scatter", mode = "markers", visible = s == "CAZymes",
+                   legendgroup = ~taxonomy, showlegend = TRUE,
+                   marker = list(size = 8, opacity = .8, line = list(width = .4, color = "#111")),
+                   text = ~paste0("<b>", bin, "</b><br>", taxonomy), hoverinfo = "text+x+y")
+}
+ntx <- n_distinct(mp$taxonomy)
+# CAZymes span up to ~20%; sulfatases and detoxification stay under 5%, so zoom those panels to 0-5%
+btns <- lapply(seq_along(pairs), function(i) {
+  lay <- list(title = list(text = names(pairs)[i], font = list(size = 13), x = .99, xanchor = "right"))
+  if (names(pairs)[i] == "CAZymes") {
+    lay[["xaxis.autorange"]] <- TRUE; lay[["yaxis.autorange"]] <- TRUE
+  } else {
+    lay[["xaxis.range"]] <- c(0, .05); lay[["yaxis.range"]] <- c(0, .05)
+  }
+  list(method = "update", label = names(pairs)[i],
+       args = list(list(visible = rep(seq_along(pairs) == i, each = ntx)), lay))
+})
+fig %>%
+  layout(updatemenus = list(list(type = "buttons", direction = "right", buttons = btns, x = 0, y = 1.15,
+                                 xanchor = "left", bgcolor = "#dfe5ec", bordercolor = "#8a93a3", font = list(color = "#111"))),
+         title = list(text = "CAZymes", font = list(size = 13), x = .99, xanchor = "right"), margin = list(t = 70),
+         xaxis = list(title = "Share of the genome's genes", tickformat = ".0%", rangemode = "tozero"),
+         yaxis = list(title = "Highest share of the MAG's expression", tickformat = ".0%", rangemode = "tozero"),
+         legend = list(title = list(text = "<b>Phylum</b>")),
+         shapes = list(list(type = "line", x0 = 0, y0 = 0, x1 = .2, y1 = .2, line = list(dash = "dot", color = "#888")))) %>%
+  dark_layout()
+```
+
+## Enzyme-level successions
+
+Splitting expression by enzyme family shows the order of events. Alginate lyases
+(PL6, PL7, PL17) and polyphenol pathways (phloroglucinol reductase, caffeate
+reduction CarA to CarE, catalase) peak early, mostly in Gammaproteobacteria.
+Carrageenan- and fucoidan-specific sulfatases and glycoside hydrolases rise
+later. The panels below are the published versions of these figures.
+
+::: {.panel-tabset}
+### Polysaccharides by enzyme
+::: {.paper-figure}
+![Rows: total substrate-specific TPM, then alginate, carrageenan and fucoidan enzymes. Columns: microcosms M30, M36, M75, M78 from day 0 to day 16.](https://raw.githubusercontent.com/AaronAOliver/Enrichments_metatranscriptomics/main/combined_enzyme_distributions_nolim.svg){width="100%"}
+:::
+
+### Polysaccharides by taxon
+::: {.paper-figure}
+![The same expression, colored by the taxonomy of the expressing MAG.](https://raw.githubusercontent.com/AaronAOliver/Enrichments_metatranscriptomics/main/combined_enzyme_tax_distributions_nolim.svg){width="100%"}
+:::
+
+### Polyphenols and ROS by taxon
+::: {.paper-figure}
+![Expression of phloroglucinol, caffeate, catalase (ROS) and dehalogenase genes, with the taxonomy of the expressing MAG.](https://raw.githubusercontent.com/AaronAOliver/Enrichments_metatranscriptomics/main/combined_detox_tax_distributions.svg){width="100%"}
+:::
+:::
+
+## Takeaways
+
+- Kept in vitro, the hindgut microbiome reproduces a staged breakdown of
+  seaweed. Gammaproteobacteria detoxify polyphenols and degrade alginate
+  first. Bacillota, Bacteroidota and Verrucomicrobiota guilds then attack the
+  sulfated polysaccharides.
+- Sulfatase-rich Bacteroidota and Verrucomicrobiota MAGs put up to 5 to 7% of
+  their transcription into sulfatases at their peak.
+- These microcosms are a tractable model for discovering CAZymes and marine
+  polyphenol-degradation pathways.
+
+::: {.callout-note collapse="true"}
+## Reproducing this page
+The figures here use the processed summary tables in the
+[repository](https://github.com/AaronAOliver/Enrichments_metatranscriptomics):
+per-MAG expression shares, MAG metadata, and the dereplicated MAG
+tree stored in `.RData`. The full RSEM gene-by-sample matrix
+(`data/binned_expression_fixed.tab`), which `genome_resolved_expression.R`
+reads, is not in the repository. The enzyme-level panels are therefore shown as
+the published figures rather than recomputed here.
+:::

@@ -1,0 +1,32 @@
+<script>
+// Jupyter-style "In [n]:" / "Out[n]:" prompts for cells that show their code.
+// The prompts sit on the cell itself, because Quarto clips overflow on output containers.
+document.addEventListener("DOMContentLoaded", function () {
+  if (!document.body.classList.contains("nb-jupyter")) return;
+  var n = 0, outs = [];
+  document.querySelectorAll("main .cell").forEach(function (cell) {
+    if (!cell.querySelector(".cell-code")) return;
+    n += 1;
+    var p = document.createElement("div");
+    p.className = "nb-prompt nb-in";
+    p.textContent = "In [" + n + "]:";
+    cell.insertBefore(p, cell.firstChild);
+    var out = cell.querySelector(".cell-output-display");
+    if (out) {
+      var q = document.createElement("div");
+      q.className = "nb-prompt nb-out";
+      q.textContent = "Out[" + n + "]:";
+      cell.appendChild(q);
+      outs.push([cell, out, q]);
+    }
+  });
+  function place() {
+    outs.forEach(function (o) {
+      o[2].style.top = (o[1].getBoundingClientRect().top - o[0].getBoundingClientRect().top) + "px";
+    });
+  }
+  place();
+  window.addEventListener("load", place);
+  window.addEventListener("resize", place);
+});
+</script>

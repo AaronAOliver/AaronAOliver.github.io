@@ -1,0 +1,339 @@
+---
+title: "Conserved synteny across Kiritimatiellia"
+subtitle: "Similarity-colocalization networks (SCoNes) for 898 genomes"
+description: "A new network data structure that links homologous genes by shared gene neighborhoods, applied to polysaccharide, nitrogen, hydrogen and natural-product metabolism in Kiritimatiellia."
+image: assets/thumbs/scone.png
+date: 2026-10-08
+categories: [comparative genomics, networks, synteny, Python]
+jupyter: python3
+format:
+  html:
+    body-classes: nb-jupyter
+    title-block-style: none
+    toc: false
+    code-fold: false
+    code-tools: false
+    code-overflow: scroll
+---
+
+```{=html}
+<div class="jp-header"><span class="jp-name">kiritimatiellia-scone.qmd</span><span class="jp-saved">Oliver, Podell &amp; Allen 2026</span><span class="jp-kernel">Python 3 (ipykernel)</span></div>
+```
+
+# Conserved synteny across Kiritimatiellia
+
+
+::: {.paper-links}
+[Preprint: Oliver, Podell & Allen 2026, *bioRxiv*](https://doi.org/10.64898/2026.10.06.756941)
+[Code: KiritimatiallesSCoNe](https://github.com/AaronAOliver/KiritimatiallesSCoNe)
+:::
+
+Kiritimatiellia are a class of Verrucomicrobiota. The few cultured members
+carry very large sets of carbohydrate-active enzymes and sulfatases, but most
+families in the class are known only from metagenome-assembled genomes, and
+their genome organization has not been described.
+
+To compare gene neighborhoods across 898 genomes, I built a new data structure:
+the similarity-colocalization network (SCoNe). It merges homologous proteins
+into communities, then links communities that repeatedly sit in the same gene
+neighborhoods, so conserved synteny shows up as heavy edges. This notebook
+builds a SCoNe from a synthetic dataset, then shows the networks from the real
+data.
+
+```{python}
+import sys, itertools, collections, random
+random.seed(42)          # igraph draws from Python's RNG: fixes Leiden + layouts
+import numpy as np
+import pandas as pd
+import igraph as ig
+import plotly.graph_objects as go
+import plotly.express as px
+from _common import repo_path, show
+
+REPO = repo_path("KiritimatiallesSCoNe")
+sys.path.insert(0, str(REPO))
+from scone.scone_metrics import ari, sea, coloc_modularity   # metrics straight from the SCoNe package
+```
+
+## How a SCoNe is built
+
+```{mermaid}
+%%| fig-width: 5
+flowchart TB
+  P[Proteins<br/>all-vs-all DIAMOND] --> S[Sequence similarity<br/>network]
+  S --> L[Weighted Leiden<br/>homology communities]
+  N[Gene neighborhoods<br/>dbCAN CGCs, antiSMASH BGCs<br/>Spacedust synteny, flanking genes] --> C
+  L --> C[Count community pairs<br/>that share a neighborhood]
+  C --> X[SCoNe<br/>nodes = communities<br/>edges = conserved colocalization]
+```
+
+The tool reads the neighborhoods as input rather than inferring them. The same
+code can therefore work on dbCAN gene clusters, antiSMASH regions, Spacedust
+synteny blocks, or the genes around one query gene.
+
+### Step 1: a sequence similarity network
+
+The synthetic dataset from Figure 2.1 has 712 proteins from 30 planted families,
+spread across 22 gene clusters. All-vs-all DIAMOND hits with an E-value of
+10<sup>-10</sup> or lower are kept, and each edge is weighted by
+-log<sub>10</sub>(E-value), as in `build_ssn_leiden.py`.
+
+```{python}
+mock = REPO / "examples" / "mock"
+cols = ["q", "s", "pident", "len", "mm", "gap", "qs", "qe", "ss", "se", "evalue", "bits"]
+hits = pd.read_csv(mock / "diamond.tsv", sep="\t", names=cols)
+hits = hits[(hits.q != hits.s) & (hits.evalue <= 1e-10)].copy()
+hits["a"] = hits[["q", "s"]].min(axis=1)
+hits["b"] = hits[["q", "s"]].max(axis=1)
+edges = (hits.groupby(["a", "b"], as_index=False)["evalue"].min()
+             .assign(weight=lambda d: -np.log10(d.evalue.clip(lower=1e-300))))
+
+nodes = pd.read_csv(mock / "nodes.txt", header=None)[0].tolist()
+truth = pd.read_csv(mock / "annotations.tsv", sep="\t").set_index("protein_id")["gene"]
+
+g = ig.Graph()
+g.add_vertices(nodes)
+g.add_edges(list(zip(edges.a, edges.b)))
+g.es["weight"] = edges.weight.tolist()
+print(f"{g.vcount()} proteins, {g.ecount():,} similarity edges")
+```
+
+### Step 2: homology communities with weighted Leiden
+
+```{python}
+part = g.community_leiden(objective_function="modularity", weights="weight",
+                          resolution=1.0, n_iterations=-1)
+leiden = dict(zip(nodes, part.membership))
+fam = [truth.get(n, "none") for n in nodes]
+print(f"{len(part)} Leiden communities; "
+      f"ARI vs. planted families = {ari(part.membership, fam):.3f}")
+```
+
+```{python}
+#| fig-cap: "The mock SSN colored by Leiden community. Hover over a node to see its planted family. Some families split into several communities, which the SCoNe step then handles."
+layout = g.layout_fruchterman_reingold(weights=[np.log1p(w) for w in g.es["weight"]], niter=500, seed=None)
+xy = np.array(layout.coords)
+ex, ey = [], []
+for e in g.es.select(lambda e: e.index % 3 == 0):         # draw every third edge to keep the figure light
+    s, t = e.tuple
+    ex += [xy[s, 0], xy[t, 0], None]; ey += [xy[s, 1], xy[t, 1], None]
+palette = px.colors.qualitative.Dark24 + px.colors.qualitative.Light24
+fig = go.Figure()
+fig.add_trace(go.Scattergl(x=ex, y=ey, mode="lines", line=dict(width=.4, color="#5a6272"),
+                           hoverinfo="skip", showlegend=False))
+fig.add_trace(go.Scattergl(
+    x=xy[:, 0], y=xy[:, 1], mode="markers",
+    marker=dict(size=8, color=[palette[m % len(palette)] for m in part.membership],
+                line=dict(width=.3, color="#111")),
+    text=[f"{n}<br>planted family: {f}<br>Leiden community {m}" for n, f, m in zip(nodes, fam, part.membership)],
+    hoverinfo="text", showlegend=False))
+fig.update_layout(height=430, margin=dict(l=10, r=10, t=10, b=10),
+                  xaxis=dict(visible=False), yaxis=dict(visible=False))
+show(fig)
+```
+
+### Step 3: collapse communities and add colocalization edges
+
+Each gene cluster adds 1 to the weight of every pair of communities it contains, counted
+once per neighborhood. Edge weight is therefore the number of independent
+neighborhoods in which two homology groups appear together.
+
+```{python}
+cmap = pd.read_csv(mock / "cluster_genome_map.tsv", sep="\t")
+comm_size = collections.Counter(part.membership)
+co = collections.Counter()
+for genes in cmap.genes:
+    comms = sorted({leiden[x] for x in genes.split(",") if x in leiden})
+    co.update(itertools.combinations(comms, 2))
+
+# label each community by its majority planted family (>= 75%), else auxiliary_N
+labels = {}
+for c in comm_size:
+    members = [truth.get(n, "none") for n in nodes if leiden[n] == c]
+    top, k = collections.Counter(members).most_common(1)[0]
+    labels[c] = top if k / len(members) >= .75 else f"auxiliary_{c}"
+
+sc = ig.Graph()
+sc.add_vertices(sorted(comm_size))
+sc.add_edges([(a, b) for a, b in co])
+sc.es["weight"] = list(co.values())
+print(f"SCoNe: {sc.vcount()} community nodes, {sc.ecount()} colocalization edges "
+      f"(max weight {max(co.values())})")
+```
+
+```{python}
+#| fig-cap: "The mock SCoNe. Node size follows community size (12 + 5.25 times the square root of n, as in the tool). Edge width and opacity follow how many gene clusters share the pair. Hover over a node to see its family."
+pos = np.array(sc.layout_kamada_kawai().coords)   # spreads the dense block more evenly than FR
+fig = go.Figure()
+wmax = max(sc.es["weight"])
+for e in sc.es:
+    s, t = e.tuple; w = e["weight"]
+    fig.add_trace(go.Scatter(x=[pos[s, 0], pos[t, 0]], y=[pos[s, 1], pos[t, 1]], mode="lines",
+                             line=dict(width=.5 + 5 * w / wmax, color=f"rgba(140,210,213,{.15 + .75 * w / wmax:.2f})"),
+                             hoverinfo="text", text=f"{labels[s]} and {labels[t]}: {w} clusters", showlegend=False))
+vids = list(range(sc.vcount()))
+fig.add_trace(go.Scatter(
+    x=pos[:, 0], y=pos[:, 1], mode="markers+text",
+    marker=dict(size=[(12 + 5.25 * np.sqrt(comm_size[v])) / 1.6 for v in vids],
+                color=[palette[v % len(palette)] for v in vids], line=dict(width=1, color="#111")),
+    text=[labels[v] for v in vids], textposition="top center", textfont=dict(size=10, color="#eaeaea"),
+    hovertext=[f"<b>{labels[v]}</b><br>{comm_size[v]} proteins<br>degree {sc.degree(v)}" for v in vids],
+    hoverinfo="text", showlegend=False))
+fig.update_layout(height=480, margin=dict(l=10, r=10, t=10, b=10),
+                  xaxis=dict(visible=False), yaxis=dict(visible=False))
+show(fig)
+```
+
+### Scoring a SCoNe
+
+`scone_metrics.py` defines SCoNe Edge Agreement (SEA). It is an adjusted
+Rand index computed over the colocalization edges rather than over genes, so it
+only penalizes partition differences that change the network's wiring. The
+package also defines colocalization modularity, which measures how well a partition lines
+up communities with the block structure of the neighborhoods.
+
+```{python}
+coloc_edges = set()
+for genes in cmap.genes:
+    coloc_edges.update(itertools.combinations(sorted(x for x in genes.split(",") if x), 2))
+p_leiden = {n: str(leiden[n]) for n in nodes}
+p_truth = {n: truth.get(n, "none") for n in nodes}
+p_singletons = {n: n for n in nodes}
+pd.DataFrame({
+    "Partition": ["Weighted Leiden", "Planted families", "Every protein alone"],
+    "SEA vs. planted": [sea(coloc_edges, p_leiden, p_truth), 1.0, sea(coloc_edges, p_singletons, p_truth)],
+    "Colocalization modularity": [coloc_modularity(coloc_edges, p) for p in (p_leiden, p_truth, p_singletons)],
+}).style.hide(axis="index").format(precision=3)
+```
+
+## The real networks: CAZyme gene clusters
+
+These are the interactive Cytoscape.js pages that `scone` produces. They were
+built from representative CAZyme gene clusters (CGCs) across all 898 genomes.
+Drag nodes, scroll to zoom, and click a node or edge to see its details. Click
+legend entries to highlight a gene class.
+
+::: {.panel-tabset}
+### All CGCs (edges in at least 5 clusters)
+<div class="embed-wrap"><iframe class="embed-frame" src="assets/scone/rep_cgc_coloc_network_5x.html" loading="lazy" title="CGC SCoNe"></iframe><div class="embed-shield" onclick="this.remove()">Click to interact with the network</div></div>
+
+### Carrageenan-degrading CGCs
+<div class="embed-wrap"><iframe class="embed-frame" src="assets/scone/rep_cgc_coloc_carr_network.html" loading="lazy" title="Carrageenase SCoNe"></iframe><div class="embed-shield" onclick="this.remove()">Click to interact with the network</div></div>
+:::
+
+## A survey of 898 genomes
+
+```{python}
+meta = pd.read_csv(REPO / "data" / "metadata" / "tree_metadata.tsv", sep="\t")
+src = pd.read_csv(REPO / "data" / "metadata" / "gtdb_genome_source.tsv", sep="\t")
+meta = meta.merge(src, left_on="accession", right_on="Accession", how="left")
+cat_colors = {"Host-Associated": "#ee5f5b", "Aquatic & Sediment": "#52adc8",
+              "Wastewater & Built Environment": "#f89406", "Terrestrial": "#62c462", "Unknown": "#6b7588"}
+order = ["Unknown", "Terrestrial", "Wastewater & Built Environment", "Aquatic & Sediment", "Host-Associated"]
+meta = meta.assign(_o=meta.category.map(order.index)).sort_values("_o")   # Unknown drawn first, underneath
+fig = px.scatter(meta, x="cazyme_pct", y="sulfatase_pct", color="category", color_discrete_map=cat_colors,
+                 category_orders={"category": order[::-1]},
+                 size="cds_count", size_max=14, opacity=.8,
+                 hover_data={"accession": True, "isolation_source": True, "Genome Source": True,
+                             "cazyme_count": True, "sulfatase_count": True, "cds_count": False},
+                 labels={"cazyme_pct": "CAZymes (% of CDS)", "sulfatase_pct": "Sulfatases (% of CDS)",
+                         "category": "Isolation source"})
+fig.update_layout(height=500, legend=dict(itemsizing="constant"))
+show(fig)
+```
+
+Point size is the number of coding sequences (CDS) in the genome.
+Host-associated genomes devote the largest share of their genes to CAZymes
+(median 2.9% of CDS). Sulfatases are mostly an aquatic trait: the median
+aquatic or sediment genome encodes sulfatases at 0.4% of its CDS, while the
+median host-associated genome encodes none. Across genomes, CAZyme and
+sulfatase counts are only weakly correlated (Spearman's rho = 0.18).
+
+```{python}
+#| fig-cap: "Median number of genes per genome in each polysaccharide-target class, by isolation source."
+cls = pd.read_csv(REPO / "data" / "metadata" / "cazyme_class_counts.tsv", sep="\t")
+heat = (cls.merge(meta[["genome", "category"]], on="genome")
+           .groupby("category").median(numeric_only=True)
+           .loc[["Host-Associated", "Aquatic & Sediment", "Wastewater & Built Environment", "Terrestrial", "Unknown"]])
+fig = go.Figure(go.Heatmap(z=heat.values, x=heat.columns, y=heat.index, colorscale="Teal",
+                           hovertemplate="%{y}<br>%{x}: %{z} genes<extra></extra>",
+                           text=heat.values, texttemplate="%{text:.0f}", colorbar=dict(title="genes")))
+fig.update_layout(height=400, xaxis_tickangle=-45, margin=dict(l=190, b=130), yaxis_autorange="reversed")
+show(fig)
+```
+
+## Beyond glycans: hydrogenases, nitrogen fixation, natural products
+
+The same SCoNe approach was applied to genes flanking [FeFe]-hydrogenases, to
+*nif* loci, and to aryl-polyene and other biosynthetic gene clusters. The
+results suggest that sulfated glycan hydrolysis fuels fermentation,
+hydrogenases balance redox, and surplus carbon supports nitrogen fixation.
+
+```{python}
+hyd = pd.read_csv(REPO / "data" / "hyd" / "hyddb_run" / "hydA_hyddb_classification.tsv", sep="\t")
+hyd["organisation"] = hyd.organisation.str.replace("_", " ")
+hyd["HydDB_FeFe_subtype"] = hyd.HydDB_FeFe_subtype.str.replace("_", " ")
+tab = hyd.groupby(["HydDB_FeFe_subtype", "organisation"]).size().reset_index(name="n")
+order = hyd.HydDB_FeFe_subtype.value_counts().index.tolist()
+fig = px.bar(tab, x="HydDB_FeFe_subtype", y="n", color="organisation", category_orders={"HydDB_FeFe_subtype": order},
+             labels={"HydDB_FeFe_subtype": "HydDB [FeFe] subtype", "n": "hydA genes", "organisation": "Locus organization"})
+fig.update_layout(height=380, barmode="stack",
+                  title=dict(text=f"{len(hyd):,} [FeFe]-hydrogenase catalytic subunits in {hyd.genome.nunique()} genomes",
+                             font=dict(size=13)))
+show(fig)
+```
+
+```{python}
+bgc = pd.read_csv(REPO / "data" / "aryl_bgc" / "community_meta.tsv", sep="\t")
+top = bgc.sort_values("size", ascending=False).head(25).copy()
+# label each community by its most common Pfam domain
+top["label"] = top.dom_pfam.replace("-", "no Pfam") + " (" + top.community.str.replace("auxiliary_", "#") + ")"
+fig = px.bar(top, x="size", y="label", color="dom_gene_kind", orientation="h",
+             category_orders={"label": top.label.tolist()},
+             hover_data=["n_gcfs", "dom_pfam", "pfam_frac"],
+             labels={"size": "proteins in community", "label": "", "dom_gene_kind": "Dominant gene kind"})
+fig.update_layout(height=600, title=dict(text="Largest homology communities in BGC neighborhoods", font=dict(size=13)))
+show(fig)
+```
+
+## Manuscript figures
+
+::: {.panel-tabset}
+### Fig. 1
+::: {.paper-figure}
+![The SCoNe concept: inputs, sequence similarity network, community detection, colocalization edges and the final network.](https://raw.githubusercontent.com/AaronAOliver/KiritimatiallesSCoNe/main/figures/Figure_2.1.svg){width="100%"}
+:::
+### Fig. 2
+::: {.paper-figure}
+![Phylogeny of Kiritimatiellia with CAZyme and sulfatase content.](https://raw.githubusercontent.com/AaronAOliver/KiritimatiallesSCoNe/main/figures/Figure_2.2.svg){width="100%"}
+:::
+### Fig. 3
+::: {.paper-figure}
+![SCoNe of representative CAZyme gene clusters.](https://raw.githubusercontent.com/AaronAOliver/KiritimatiallesSCoNe/main/figures/Figure_2.3.svg){width="100%"}
+:::
+### Fig. 4
+::: {.paper-figure}
+![Biosynthetic gene clusters.](https://raw.githubusercontent.com/AaronAOliver/KiritimatiallesSCoNe/main/figures/Figure_2.4.svg){width="100%"}
+:::
+### Fig. 5
+::: {.paper-figure}
+![Nitrogen fixation loci.](https://raw.githubusercontent.com/AaronAOliver/KiritimatiallesSCoNe/main/figures/Figure_2.5.svg){width="100%"}
+:::
+### Fig. 6
+::: {.paper-figure}
+![[FeFe]-hydrogenases and their flanking genes.](https://raw.githubusercontent.com/AaronAOliver/KiritimatiallesSCoNe/main/figures/Figure_2.6.svg){width="100%"}
+:::
+:::
+
+## Running SCoNe on other data
+
+```bash
+pip install git+https://github.com/AaronAOliver/KiritimatiallesSCoNe
+diamond blastp -q proteins.faa -d db -o hits.tsv --outfmt 6 --max-target-seqs 3000 -e 1e-3
+scone run --homology hits.tsv --coloc neighborhoods.tsv --annotations annotations.tsv \
+          --evalue 1e-30 --min-cluster-size 3 --min-edge-weight 5 --out-prefix out/run1 --cyjs
+```
+
+`neighborhoods.tsv` has one row per neighborhood (`cluster_id`, `genome`, and
+a comma-separated list of `genes`). The output is an interactive HTML SSN and
+SCoNe, the community table, SVGs, and a `.cyjs` file for Cytoscape desktop.

@@ -1,0 +1,62 @@
+project:
+  type: website
+  output-dir: _site
+  post-render: _publish.py
+  render:
+    - index.qmd
+    - kyphosus-mags.qmd
+    - enrichments-metatranscriptomics.qmd
+    - kiritimatiellia-scone.qmd
+    - mpcgc.qmd
+  resources:
+    - assets/
+
+website:
+  title: "Aaron Oliver"
+  site-url: https://aaronoliver.dev/notebooks
+  page-navigation: true
+  search: false
+  # same header as aaronoliver.dev: name, then Publications, Teaching, CV, Portfolio
+  navbar:
+    title: "Aaron Oliver"
+    href: https://aaronoliver.dev/
+    left:
+      - href: https://aaronoliver.dev/publications/
+        text: Publications
+      - href: https://aaronoliver.dev/teaching/
+        text: Teaching
+      - href: https://aaronoliver.dev/cv/
+        text: CV
+      - href: https://aaronoliver.dev/portfolio/
+        text: Portfolio
+  page-footer:
+    left: "**Follow:** [<i class='bi bi-github'></i> GitHub](https://github.com/AaronAOliver)"
+    right: "&copy; 2026 Aaron Oliver. Notebooks rendered with [Quarto](https://quarto.org)."
+
+format:
+  html:
+    theme: [darkly, assets/portfolio.scss]
+    include-after-body: assets/notebook.html
+    lightbox: auto
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: Contents
+    number-sections: false
+    code-fold: true
+    code-summary: "Code"
+    code-tools: true
+    code-overflow: wrap
+    code-copy: hover
+    highlight-style: nord
+    fig-align: center
+    fig-responsive: true
+    smooth-scroll: true
+    link-external-newwindow: true
+    link-external-filter: '^(?:http:|https:)\/\/aaronoliver\.dev'
+    anchor-sections: true
+
+execute:
+  warning: false
+  message: false
+  freeze: false

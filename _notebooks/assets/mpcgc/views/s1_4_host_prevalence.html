@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<title>S1_4 - host distribution</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;background:transparent;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
+    'Helvetica Neue',Arial,sans-serif;color:#222;}
+  .wrap{padding:8px 12px 4px;max-width:1112px;}
+  svg{display:block;width:100%;height:auto;}
+  svg .bar{cursor:pointer;transition:filter .12s;}
+  svg .bar:hover{filter:brightness(1.08);}
+  #tip{position:fixed;z-index:50;display:none;max-width:300px;
+        background:#fff;color:#222;border:1px solid #d8d8d8;
+        border-radius:6px;padding:9px 12px;font-size:12px;
+        box-shadow:0 2px 6px rgba(0,0,0,.12);pointer-events:none;
+        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
+        'Helvetica Neue',Arial,sans-serif;}
+  #tip .g{font-weight:600;font-size:13px;color:#1a1a1a;margin-bottom:3px;}
+  #tip table{font-size:11.5px;border-collapse:collapse;margin-top:3px;}
+  #tip td{padding:1px 6px 1px 0;vertical-align:top;}
+  #tip td.k{color:#888;}
+  #tip td.v{font-family:Menlo,Consolas,monospace;color:#1c5f87;}
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/embed.css?v=20261005b">
+</head><body>
+<div class="wrap"><svg viewBox="0 0 1088 377" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prevalence by host group" style="width:100%;max-width:1088px;height:auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;"><line x1="60" y1="22" x2="60" y2="302" stroke="#1a1a1a" stroke-width="1"/><line x1="60" y1="302" x2="1068" y2="302" stroke="#1a1a1a" stroke-width="1"/><line x1="60" y1="302.0" x2="1068" y2="302.0" stroke="#e6e6e6" stroke-width="1"/><text x="53" y="305.0" text-anchor="end" font-size="10" fill="#666">0%</text><line x1="60" y1="208.7" x2="1068" y2="208.7" stroke="#e6e6e6" stroke-width="1"/><text x="53" y="211.7" text-anchor="end" font-size="10" fill="#666">10%</text><line x1="60" y1="115.3" x2="1068" y2="115.3" stroke="#e6e6e6" stroke-width="1"/><text x="53" y="118.3" text-anchor="end" font-size="10" fill="#666">20%</text><line x1="60" y1="22.0" x2="1068" y2="22.0" stroke="#e6e6e6" stroke-width="1"/><text x="53" y="25.0" text-anchor="end" font-size="10" fill="#666">30%</text><text x="20" y="162" transform="rotate(-90 20 162)" text-anchor="middle" font-size="12" font-weight="600" fill="#222">Enzyme Prevalence</text><rect class="bar" x="74" y="187.5" width="70" height="114.5" rx="3" ry="3" fill="#1f77b4" stroke="#1a1a1a" stroke-width="1" data-group="Actinobacteriota" data-prevalence="12.27" data-nhosts="124" data-ntotal="1011" data-nmulti="34" data-pctmulti="27.42" data-meancp="1.35" data-maxcp="4" /><text x="109.0" y="183.5" text-anchor="middle" font-size="11" font-weight="600" fill="#222">12.3%</text><text x="109.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 109.0 314)">Actinobacteriota</text><rect class="bar" x="158" y="245.0" width="70" height="57.0" rx="3" ry="3" fill="#ff7f0e" stroke="#1a1a1a" stroke-width="1" data-group="Alphaproteobacteria" data-prevalence="6.11" data-nhosts="311" data-ntotal="5094" data-nmulti="32" data-pctmulti="10.29" data-meancp="1.11" data-maxcp="3" /><text x="193.0" y="241.0" text-anchor="middle" font-size="11" font-weight="600" fill="#222">6.1%</text><text x="193.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 193.0 314)">Alphaproteobacteria</text><rect class="bar" x="242" y="294.8" width="70" height="7.2" rx="3" ry="3" fill="#2ca02c" stroke="#1a1a1a" stroke-width="1" data-group="Archaea" data-prevalence="0.78" data-nhosts="17" data-ntotal="2189" data-nmulti="0" data-pctmulti="0.00" data-meancp="1.00" data-maxcp="1" /><text x="277.0" y="290.8" text-anchor="middle" font-size="11" font-weight="600" fill="#222">0.8%</text><text x="277.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 277.0 314)">Archaea</text><rect class="bar" x="326" y="96.6" width="70" height="205.4" rx="3" ry="3" fill="#d62728" stroke="#1a1a1a" stroke-width="1" data-group="Bacteroidota" data-prevalence="22.00" data-nhosts="727" data-ntotal="3304" data-nmulti="212" data-pctmulti="29.16" data-meancp="1.49" data-maxcp="7" /><text x="361.0" y="92.6" text-anchor="middle" font-size="11" font-weight="600" fill="#222">22.0%</text><text x="361.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 361.0 314)">Bacteroidota</text><rect class="bar" x="410" y="261.9" width="70" height="40.1" rx="3" ry="3" fill="#9467bd" stroke="#1a1a1a" stroke-width="1" data-group="Chloroflexota" data-prevalence="4.29" data-nhosts="41" data-ntotal="955" data-nmulti="5" data-pctmulti="12.20" data-meancp="1.15" data-maxcp="3" /><text x="445.0" y="257.9" text-anchor="middle" font-size="11" font-weight="600" fill="#222">4.3%</text><text x="445.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 445.0 314)">Chloroflexota</text><rect class="bar" x="494" y="251.6" width="70" height="50.4" rx="3" ry="3" fill="#8c564b" stroke="#1a1a1a" stroke-width="1" data-group="Cyanobacteria" data-prevalence="5.40" data-nhosts="39" data-ntotal="722" data-nmulti="4" data-pctmulti="10.26" data-meancp="1.10" data-maxcp="2" /><text x="529.0" y="247.6" text-anchor="middle" font-size="11" font-weight="600" fill="#222">5.4%</text><text x="529.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 529.0 314)">Cyanobacteria</text><rect class="bar" x="578" y="290.0" width="70" height="12.0" rx="3" ry="3" fill="#e377c2" stroke="#1a1a1a" stroke-width="1" data-group="Desulfobacterota" data-prevalence="1.28" data-nhosts="9" data-ntotal="702" data-nmulti="0" data-pctmulti="0.00" data-meancp="1.00" data-maxcp="1" /><text x="613.0" y="286.0" text-anchor="middle" font-size="11" font-weight="600" fill="#222">1.3%</text><text x="613.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 613.0 314)">Desulfobacterota</text><rect class="bar" x="662" y="42.8" width="70" height="259.2" rx="3" ry="3" fill="#7f7f7f" stroke="#1a1a1a" stroke-width="1" data-group="Firmicutes" data-prevalence="27.77" data-nhosts="133" data-ntotal="479" data-nmulti="38" data-pctmulti="28.57" data-meancp="1.38" data-maxcp="4" /><text x="697.0" y="38.8" text-anchor="middle" font-size="11" font-weight="600" fill="#222">27.8%</text><text x="697.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 697.0 314)">Firmicutes</text><rect class="bar" x="746" y="243.9" width="70" height="58.1" rx="3" ry="3" fill="#bcbd22" stroke="#1a1a1a" stroke-width="1" data-group="Gammaproteobacteria" data-prevalence="6.22" data-nhosts="262" data-ntotal="4209" data-nmulti="24" data-pctmulti="9.16" data-meancp="1.10" data-maxcp="3" /><text x="781.0" y="239.9" text-anchor="middle" font-size="11" font-weight="600" fill="#222">6.2%</text><text x="781.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 781.0 314)">Gammaproteobacteria</text><rect class="bar" x="830" y="157.3" width="70" height="144.7" rx="3" ry="3" fill="#17becf" stroke="#1a1a1a" stroke-width="1" data-group="Planctomycetota" data-prevalence="15.51" data-nhosts="154" data-ntotal="993" data-nmulti="35" data-pctmulti="22.73" data-meancp="1.37" data-maxcp="6" /><text x="865.0" y="153.3" text-anchor="middle" font-size="11" font-weight="600" fill="#222">15.5%</text><text x="865.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 865.0 314)">Planctomycetota</text><rect class="bar" x="914" y="140.4" width="70" height="161.6" rx="3" ry="3" fill="#1a3f70" stroke="#1a1a1a" stroke-width="1" data-group="Verrucomicrobiota" data-prevalence="17.32" data-nhosts="102" data-ntotal="589" data-nmulti="22" data-pctmulti="21.57" data-meancp="1.28" data-maxcp="5" /><text x="949.0" y="136.4" text-anchor="middle" font-size="11" font-weight="600" fill="#222">17.3%</text><text x="949.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 949.0 314)">Verrucomicrobiota</text><rect class="bar" x="998" y="268.2" width="70" height="33.8" rx="3" ry="3" fill="#c9c9c9" stroke="#1a1a1a" stroke-width="1" data-group="other" data-prevalence="3.62" data-nhosts="143" data-ntotal="3948" data-nmulti="15" data-pctmulti="10.49" data-meancp="1.11" data-maxcp="3" /><text x="1033.0" y="264.2" text-anchor="middle" font-size="11" font-weight="600" fill="#222">3.6%</text><text x="1033.0" y="314" text-anchor="end" font-size="10" fill="#444" transform="rotate(-30 1033.0 314)">other</text></svg></div>
+<div id="tip"></div>
+<script>(function(){
+  var tip = document.getElementById('tip');
+  function show(e){
+    var g = e.target.closest('rect.bar');
+    if (!g) return;
+    var d = g.dataset;
+    tip.innerHTML =
+      '<div class="g">' + d.group + '</div>' +
+      '<table>' +
+      '<tr><td class="k">Prevalence</td><td class="v">' + d.prevalence +
+        '%  (' + d.nhosts + ' / ' + d.ntotal + ' genomes)</td></tr>' +
+      '<tr><td class="k">Multi-copy hosts</td><td class="v">' +
+        d.nmulti + ' genomes (' + d.pctmulti + '% of hosts)</td></tr>' +
+      '<tr><td class="k">Mean copies / host</td><td class="v">' +
+        d.meancp + '</td></tr>' +
+      '<tr><td class="k">Max copies in one genome</td><td class="v">' +
+        d.maxcp + '</td></tr>' +
+      '</table>';
+    tip.style.display = 'block';
+    move(e);
+  }
+  function move(e){
+    var pad = 14;
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = e.clientX + pad, y = e.clientY + pad;
+    if (x + w > window.innerWidth - 8)  x = e.clientX - pad - w;
+    if (y + h > window.innerHeight - 8) y = e.clientY - pad - h;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hide(){ tip.style.display = 'none'; }
+  document.querySelectorAll('rect.bar').forEach(function(b){
+    b.addEventListener('mouseenter', show);
+    b.addEventListener('mousemove',  move);
+    b.addEventListener('mouseleave', hide);
+  });
+})();</script>
+</body></html>

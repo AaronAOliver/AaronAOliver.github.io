@@ -1,0 +1,31 @@
+/* Shared look for the embedded charts (phylogenies, sunbursts, SCoNe
+   networks, host-distribution bars). Linked by scripts/apply_theme.py. */
+html, body, button, input, select, textarea, .panel, #tip, #cgc-tip {
+  font-family: 'Source Sans 3', 'Segoe UI', -apple-system, Roboto, sans-serif !important;
+}
+body { color: #17212b; }
+svg, svg text { font-family: 'Source Sans 3', 'Segoe UI', -apple-system, Roboto, sans-serif !important; }
+code, .mono, #tip td.v, .pid { font-family: 'Source Code Pro', Consolas, Menlo, monospace !important; }
+
+/* phylogeny search toolbar */
+.toolbar { background: #f6f8fa !important; border-bottom: 1px solid #e3e7eb !important; font-size: 14px !important; gap: 8px !important; }
+.toolbar label { color: #3a4754 !important; font-weight: 600; }
+.toolbar input { border-color: #c9d0d7 !important; border-radius: 5px !important; font-size: 14px !important; padding: 5px 9px !important; }
+.toolbar input:focus { border-color: #1c5f87 !important; box-shadow: 0 0 0 3px rgba(28, 95, 135, .14) !important; }
+.toolbar button { border-color: #c9d0d7 !important; border-radius: 5px !important; font-size: 14px !important; color: #1c5f87; font-weight: 600; }
+.toolbar button:first-of-type { background: #1c5f87 !important; border-color: #1c5f87 !important; color: #fff !important; }
+.toolbar button:first-of-type:hover { background: #123f5c !important; }
+.toolbar .status { color: #5f6c78 !important; font-size: 13px !important; }
+
+/* Plotly: let figures fill the frame, keep the tool strip quiet */
+.plotly-graph-div { max-width: 100%; }
+/* a figure meant to fill its frame (height:100%) sits in a wrapper <div> with
+   no height; size the wrapper up front so the first draw is already full size */
+body > div:has(> .plotly-graph-div[style*="height:100%"]) { height: 100%; }
+.modebar { opacity: .55; }
+.modebar:hover { opacity: 1; }
+.modebar-btn path { fill: #5f6c78 !important; }
+
+/* Cytoscape overlays */
+.panel { border-color: #dde2e7 !important; border-radius: 6px !important; box-shadow: 0 1px 3px rgba(15, 39, 56, .06) !important; }
+.panel h3 { font-size: 14px !important; color: #17212b !important; }

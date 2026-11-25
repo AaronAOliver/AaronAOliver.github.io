@@ -11,3 +11,5 @@ citation: 'Podell, S., <b>Oliver, A.</b>, Wegley Kelly, L. <i>et al.</i> Herbivo
 Marine herbivorous fish that feed primarily on macroalgae, such as those from the genus Kyphosus, are essential for maintaining coral health and abundance on tropical reefs. Here, deep metagenomic sequencing and assembly of gut compartment-specific samples from three different species of macro-algivorous Hawaiian kyphosids have been used to connect host gut microbial taxa with predicted protein functional capacities likely to contribute to efficient macroalgal digestion.
 
 [Open access link to paper!](https://journals.asm.org/doi/full/10.1128/aem.02154-22)
+
+[Download paper here!](/files/Krumbs2023.pdf)

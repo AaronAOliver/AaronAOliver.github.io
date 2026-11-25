@@ -12,4 +12,4 @@ We discovered an extremophile algae in some local pond scum, that exhibits high 
 
 [Open access link to paper!](https://doi.org/10.1016/j.algal.2025.104034)
 
-[Download paper here!](/files/CpacGenome2025.pdf)
+[Download paper here!](/files/CpacGenome25.pdf)

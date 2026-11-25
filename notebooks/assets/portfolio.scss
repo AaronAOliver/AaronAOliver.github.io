@@ -1,0 +1,203 @@
+/*-- scss:defaults --*/
+// Colours, fonts and header copied from aaronoliver.dev (Academic Pages, dark skin).
+// Layout: R pages get body class .nb-rmd (R Markdown html_document), Python pages .nb-jupyter (Jupyter notebook).
+$site-bg:        #252a34;
+$site-text:      #eaeaea;
+$site-teal:      #8cd2d5;   // header links
+$site-link:      #52adc8;   // links in the page
+$site-border:    #51555d;
+$site-muted:     #9ba1a6;
+$site-panel:     #2d3340;
+$site-code:      #1f232b;
+
+$body-bg:        $site-bg;
+$body-color:     $site-text;
+$primary:        $site-teal;
+$link-color:     $site-link;
+$secondary:      #3a4150;
+$info:           $site-link;
+$success:        #62c462;
+$warning:        #f89406;
+$danger:         #ee5f5b;
+$navbar-bg:      $site-bg;
+$navbar-fg:      $site-teal;
+$navbar-hl:      #ffffff;
+$footer-bg:      $site-bg;
+$footer-fg:      $site-muted;
+$code-bg:        $site-code;
+$code-color:     #f0c75e;
+$border-color:   $site-border;
+$font-family-sans-serif: -apple-system, ".SFNSText-Regular", "San Francisco", Roboto, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+$font-family-monospace: Monaco, Consolas, "Lucida Console", monospace;
+$font-size-root: 16px;
+$headings-font-weight: 700;
+$toc-active-border: $site-teal;
+
+/*-- scss:rules --*/
+// ---------- header and footer: the aaronoliver.dev masthead ----------
+.navbar {
+  background: $site-bg !important; border-bottom: 1px solid $site-border; box-shadow: none;
+  padding-top: .6rem; padding-bottom: .6rem;
+  .navbar-brand, .navbar-title { color: $site-teal !important; font-weight: 700; font-size: 1.05rem; }
+  .nav-link { color: $site-teal !important; font-size: 1.05rem; padding-left: 1rem !important; padding-right: 0 !important; }
+  .nav-link:hover, .navbar-brand:hover .navbar-title { color: #fff !important; }
+  .navbar-toggler { background: $site-teal; border: 0; }
+}
+.nav-footer { border-top: 1px solid $site-border; color: $site-muted; font-size: .8rem; }
+.nav-footer a { color: $site-muted; }
+
+// ---------- shared ----------
+h1, h2, h3, h4 { color: $site-text; }
+h2 { margin-top: 2.4rem; padding-bottom: .4rem; border-bottom: 1px solid $site-border; }
+h3 { margin-top: 1.6rem; }
+a { text-decoration: underline; text-underline-offset: 2px; }
+.navbar a, .nb-row, #TOC a, .nav-footer a, .panel-tabset a { text-decoration: none; }
+.quarto-category, .quarto-title .description { display: none; }
+
+// paper / code / data links: a plain line of links separated by rules
+.paper-links {
+  margin: .4rem 0 1.4rem; font-size: .92rem;
+  p { margin: 0; display: flex; flex-wrap: wrap; row-gap: .25rem; }
+  a { padding: 0 .7rem; border-left: 1px solid $site-border; }
+  a:first-child { padding-left: 0; border-left: 0; }
+}
+
+// code and output blocks
+div.sourceCode, pre.sourceCode { background: $site-code; border: 1px solid $site-border; border-radius: 3px; }
+pre code, div.sourceCode code { font-size: 13px; line-height: 1.45; }
+.cell-output pre, .cell-output-stdout pre {
+  background: transparent; border: 0; padding: .4rem .6rem; font-size: 13px; color: $site-text;
+}
+.cell-output-display .figure-caption, figcaption, .figure-caption { font-size: .85rem; color: $site-muted; text-align: left; }
+.cell { margin-bottom: 1.2rem; }
+
+// manuscript figures are white-background images: show them on a white card
+.paper-figure img, img.paper-figure { background: #fff; border-radius: 4px; padding: 8px; }
+.embed-frame { width: 100%; height: 640px; border: 1px solid $site-border; border-radius: 4px; background: #fff; }
+.embed-wrap { position: relative; }
+.embed-shield {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: .8rem; cursor: pointer; font-size: .85rem; color: $site-bg; border-radius: 4px;
+  background: linear-gradient(to top, rgba(140,210,213,.6), rgba(140,210,213,0) 30%);
+}
+
+// tables (kable, pandas, DT)
+table.table, .dataframe { font-size: .85rem; color: $site-text; }
+.table { --bs-table-bg: transparent; --bs-table-color: #{$site-text}; --bs-table-striped-bg: #{$site-panel}; }
+.dataframe { border-collapse: collapse; border: none; margin: .3rem 0; }
+.dataframe th, .dataframe td { padding: .25rem .7rem; border: none; text-align: right; }
+.dataframe thead th { border-bottom: 1px solid $site-text; font-weight: bold; }
+.dataframe tbody tr:nth-child(odd) { background: $site-panel; }
+.dataframe tbody tr:hover { background: rgba(140,210,213,.15); }
+.dataTables_wrapper { font-size: .85rem; color: $site-text !important; }
+table.dataTable { color: $site-text !important; }
+table.dataTable tbody tr { background: transparent !important; }
+table.dataTable.stripe tbody tr.odd { background: $site-panel !important; }
+table.dataTable tbody td, table.dataTable thead th { padding: 4px 8px !important; }
+table.dataTable tbody td { white-space: nowrap; }
+.dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_length select,
+table.dataTable thead input, table.dataTable thead select {
+  background: $site-code; color: $site-text; border: 1px solid $site-border; font-size: .75rem;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button { color: $site-text !important; }
+.dt-button { background: $site-panel !important; color: $site-text !important; border: 1px solid $site-border !important; }
+
+div.callout { background: $site-panel; border-left-width: 4px; }
+.panel-tabset .nav-link { color: $site-link; }
+.panel-tabset .nav-link.active { background: $site-bg; color: $site-text; border-color: $site-border $site-border $site-bg; }
+
+// ---------- Jupyter notebook pages ----------
+body.nb-jupyter {
+  #quarto-content { padding-top: 1rem; }
+  #quarto-sidebar, #quarto-margin-sidebar, #title-block-header { display: none; }
+  main.content {
+    grid-column: page-start / page-end !important; max-width: 1100px; width: 100%; justify-self: center;
+    border: 1px solid $site-border; border-radius: 4px;
+    padding: 1.2rem 1.5rem 2.5rem 110px; margin-bottom: 2rem;
+  }
+  .jp-header {
+    margin: -1.2rem -1.5rem 1.4rem -110px; padding: .55rem 1.5rem; border-bottom: 1px solid $site-border;
+    display: flex; align-items: baseline; gap: 1rem; font-size: .88rem; color: $site-muted; background: $site-code;
+    border-radius: 4px 4px 0 0;
+    .jp-name { font-size: 1.15rem; color: $site-text; font-family: $font-family-monospace; }
+    .jp-kernel { margin-left: auto; border: 1px solid $site-border; border-radius: 2px; padding: .05rem .5rem; }
+  }
+  .cell { position: relative; }
+  .nb-prompt {
+    position: absolute; left: -102px; width: 94px; text-align: right;
+    font-family: $font-family-monospace; font-size: 13px; line-height: 1.4; padding-top: .45rem;
+  }
+  .nb-in { color: $site-link; }
+  .nb-out { color: #ee8a87; }
+  .cell-output-display table { width: auto; min-width: 40%; }   // pandas tables size to their content, as in Jupyter
+  .cell-output-display table td, .cell-output-display table th { padding: .25rem .8rem; }
+  .mermaid svg { max-width: 560px !important; }
+  h1 { font-size: 2rem; margin-top: .5rem; }
+}
+@media (max-width: 767px) {
+  body.nb-jupyter main.content { padding-left: 1rem; }
+  body.nb-jupyter .jp-header { margin-left: -1rem; }
+  body.nb-jupyter .nb-prompt { position: static; display: block; text-align: left; width: auto; padding: 0; }
+}
+
+// ---------- R Markdown pages ----------
+body.nb-rmd {
+  #title-block-header { margin-bottom: 1.2rem; border-bottom: 0; }
+  h1.title { font-size: 2.1rem; margin-bottom: .3rem; }
+  .subtitle { font-size: 1.15rem; color: $site-muted; }
+  .quarto-title-meta-heading { display: none; }
+  .quarto-title-meta-contents p { font-size: 1rem; font-weight: 600; margin: .1rem 0; color: $site-text; }
+  .quarto-title-meta > div { margin-bottom: 0; }
+  #title-block-header .description { display: none; }
+  #title-block-header .quarto-title-meta { display: block !important; margin-top: .6rem; }
+
+  // floating TOC in the tocify style: boxed list, active entry filled
+  #TOC, nav#TOC { font-size: .88rem; }
+  #TOC > h2 { display: none; }
+  #TOC ul { border: 1px solid $site-border; border-radius: 4px; padding: 0; list-style: none; }
+  #TOC ul ul { border: 0; border-radius: 0; }
+  #TOC li a {
+    display: block; padding: .35rem .7rem; border: 0; border-top: 1px solid $site-border; margin: 0;
+    color: $site-teal !important; background: transparent !important; opacity: 1 !important;
+  }
+  #TOC li a span { color: inherit !important; }
+  #TOC li a:hover { background: $site-panel !important; }
+  #TOC > ul > li:first-child > a { border-top: 0; }
+  #TOC ul ul li a { padding-left: 1.5rem; }
+  #TOC li a.active, #TOC li a.active span { background: $site-teal !important; color: $site-bg !important; border-left: 0; }
+
+  // the "Code" buttons that fold each chunk
+  details.code-fold { margin-bottom: .4rem; }
+  details.code-fold > summary {
+    display: block; width: max-content; margin-left: auto; list-style: none;
+    border: 1px solid $site-border; border-radius: 3px; background: $site-panel; padding: 1px 8px;
+    font-size: 12px; color: $site-text; cursor: pointer;
+    &::-webkit-details-marker, &::marker { display: none; content: ""; }
+    &::before { display: none; }
+    &:hover { background: #3a4150; }
+  }
+  details.code-fold[open] > summary { background: #3a4150; margin-bottom: .3rem; }
+  .code-tools-button { border: 1px solid $site-border; border-radius: 3px; font-size: 12px; padding: 1px 8px; color: $site-text; }
+}
+
+// ---------- notebook index (a file browser) ----------
+.nb-tree {
+  border: 1px solid $site-border; border-radius: 3px; margin-top: 1rem;
+  .nb-tree-head, .nb-row {
+    display: grid; grid-template-columns: 1fr 120px 190px; gap: 1rem; padding: .6rem .9rem; align-items: start;
+  }
+  .nb-tree-head { background: $site-code; border-bottom: 1px solid $site-border; font-size: .8rem; color: $site-muted; }
+  .nb-row { border-bottom: 1px solid $site-border; color: $site-text; }
+  .nb-row:last-child { border-bottom: 0; }
+  .nb-row:hover { background: $site-panel; }
+  .nb-file { font-family: $font-family-monospace; font-size: .92rem; color: $site-teal; }
+  .nb-file i { color: #f89406; margin-right: .4rem; }
+  .nb-file i.r { color: $site-link; }
+  .nb-desc { font-size: .86rem; color: #c9ced8; margin-top: .2rem; }
+  .nb-meta { font-size: .82rem; color: $site-muted; }
+  .nb-meta a { color: $site-link; }
+  .nb-meta a.nb-pub { color: $site-muted; font-size: .78rem; }
+  a.nb-file { display: inline-block; text-decoration: none; }
+  a.nb-file:hover { text-decoration: underline; }
+}
+@media (max-width: 600px) { .nb-tree .nb-tree-head, .nb-tree .nb-row { grid-template-columns: 1fr; } }

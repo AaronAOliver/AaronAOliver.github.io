@@ -1,0 +1,480 @@
+---
+title: "Seaweed-degrading gut symbionts of *Kyphosus* fish"
+subtitle: "Genome-resolved metagenomics of wild fish guts and bioreactor enrichments"
+description: "MAG recovery, phylogenomics, CAZyme and sulfatase repertoires, SCFA pathways and biosynthetic gene clusters from Kyphosus gut microbiomes."
+image: assets/thumbs/kyphosus.jpg
+date: 2024-03-27
+categories: [metagenomics, MAGs, CAZymes, R]
+author: "Aaron Oliver"
+format:
+  html:
+    body-classes: nb-rmd
+    number-sections: true
+---
+
+```{r setup}
+#| include: false
+source("_common.R")
+suppressPackageStartupMessages({
+  library(ape); library(treeio); library(ggtree); library(ggtreeExtra)
+  library(ggnewscale); library(ggbeeswarm)
+})
+kd <- function(f) repo_path("KyphosusMAGs", "data", f)
+```
+
+::: {.paper-links}
+[Paper: Oliver *et al.* 2024, *mBio*](https://doi.org/10.1128/mbio.00496-24)
+[Code: KyphosusMAGs](https://github.com/AaronAOliver/KyphosusMAGs)
+[Data: MAGs on Zenodo](https://doi.org/10.5281/zenodo.8277654)
+[SRA PRJNA819194 / PRJNA1023379](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1023379)
+:::
+
+Herbivorous *Kyphosus* fish (nenue, or rudderfish) live on red, green and brown
+seaweed and rely on gut microbes to break down its polysaccharides. Algal
+glycans such as agar, carrageenan, alginate, fucoidan and ulvan are heavily
+sulfated, so the industrial enzymes used for land plants work poorly on them.
+We recovered metagenome-assembled genomes (MAGs) from wild fish guts and from
+bioreactors seeded with gut contents, and identified which microbes carry the
+enzymes for each step of degradation.
+
+This notebook rebuilds the main analyses from the processed tables in the
+repository. Most figures are interactive: hover for values, click legend entries
+to hide groups, and drag to zoom.
+
+```{r load-data}
+bin_taxa    <- read.delim(kd("bin_taxa.tab"))
+bin_cazy    <- read.delim(kd("bin_cazy.tab"), check.names = FALSE)
+bin_source  <- read.delim(kd("bin_source.tab"))
+bin_scfa    <- read.delim(kd("bin_scfa.tab"))
+bin_sulf    <- read.delim(kd("bin_sulf_reduct.tab"), check.names = FALSE)
+bin_bgc     <- read.delim(kd("bin_bgc.tab"), check.names = FALSE)
+bin_quality <- read.delim(kd("bin_quality.txt"))
+
+mags <- bin_taxa %>%
+  rename(MAG = bin, Taxonomy = taxa, `Genome size (bp)` = size,
+         CGCs = cgcs, `CGC genes` = cgcgenes) %>%
+  left_join(bin_cazy %>% rename(MAG = bins), by = "MAG") %>%
+  left_join(bin_source %>% select(MAG = bins, Source), by = "MAG") %>%
+  left_join(bin_scfa %>% select(MAG = MAG_id, Acetate, Propanoate, Butyrate), by = "MAG") %>%
+  left_join(bin_sulf %>% rename(MAG = MAG_id), by = "MAG") %>%
+  left_join(bin_bgc %>% count(MAG, name = "BGCs"), by = "MAG") %>%
+  mutate(BGCs = replace_na(BGCs, 0))
+
+study_mags <- filter(mags, Source != "Database Relative")
+nice <- function(x) str_replace(x, " Algae CaZy", " algal CAZymes")   # "Red Algae CaZy" -> "Red algal CAZymes"
+
+tibble(
+  Quantity = c("MAGs with CAZyme annotations (fish gut + bioreactor)", "High-quality MAGs",
+               "Biosynthetic gene clusters", "BGCs far from any known gene cluster family"),
+  Count = c(nrow(study_mags), sum(bin_quality$High.Quality), nrow(bin_bgc), sum(bin_bgc$novel))
+) %>% knitr::kable()
+```
+
+## Workflow
+
+```{mermaid}
+%%| fig-width: 7
+flowchart LR
+  A[Wild Kyphosus gut<br/>metagenomes] --> C
+  B[Bioreactor enrichments<br/>fed macroalgae] --> C
+  C[Assembly + binning<br/>MAG QC] --> D[PhyloPhlAn<br/>phylogenomics]
+  C --> E[dbCAN + SulfAtlas<br/>CAZymes & sulfatases]
+  C --> F[gutSMASH<br/>SCFA pathways]
+  C --> G[antiSMASH + BiG-SLiCE<br/>BGC novelty]
+  E --> H[Enzyme novelty<br/>vs. nr / CAZy / SulfAtlas]
+  E --> I[GH86 gene tree<br/>signal peptides]
+```
+
+## Read-based taxonomy
+
+Unassembled reads were classified with Kraken2 before binning. Compared with the wild fish guts, the
+bioreactors are enriched in Bacillota (23% vs. 6% of reads on average) and
+Desulfovibrionales (11% vs. 2%), and fewer of their reads are left
+unclassified.
+
+```{r read-taxonomy}
+#| fig-height: 5
+taxa_cols <- c("Bacillota", "Bacteroidota", "Gammaproteobacteria", "Alphaproteobacteria",
+               "Desulfovibrionales", "Verrucomicrobiota", "Spirochaetota", "Fusobacteriota",
+               "Fibrobacterota", "WOR.3", "Eukaryota", "Other.Taxa")
+reads <- read.delim(kd("read_taxonomy.tab")) %>%
+  filter(source %in% c("grey", "lightblue")) %>%
+  mutate(Group = if_else(source == "grey", "Bioreactor enrichment", "Wild fish gut")) %>%
+  pivot_longer(all_of(taxa_cols), names_to = "Taxon", values_to = "Fraction") %>%
+  mutate(Taxon = recode(Taxon, WOR.3 = "WOR-3", Other.Taxa = "Other Taxa"),
+         Taxon = factor(Taxon, levels = rev(recode(taxa_cols, WOR.3 = "WOR-3", Other.Taxa = "Other Taxa"))))
+
+make_bar <- function(d, show) {
+  plot_ly(d, x = ~id, y = ~Fraction, color = ~Taxon, colors = tax_colors,
+          type = "bar", legendgroup = ~Taxon, showlegend = show,
+          hovertemplate = "%{x}<br>%{fullData.name}: %{y:.1%}<extra></extra>") %>%
+    layout(barmode = "stack", yaxis = list(tickformat = ".0%"))
+}
+subplot(
+  make_bar(filter(reads, Group == "Bioreactor enrichment"), TRUE),
+  make_bar(filter(reads, Group == "Wild fish gut"), FALSE),
+  shareY = TRUE, widths = c(.4, .6), margin = .02
+) %>% dark_layout(
+  yaxis = list(title = "Fraction of classified reads", tickformat = ".0%"),
+  xaxis = list(tickangle = -45), xaxis2 = list(tickangle = -45),
+  legend = list(traceorder = "reversed", title = list(text = "<b>Taxon</b>")),
+  annotations = list(
+    list(text = "<b>Bioreactor enrichments</b>", x = .2, y = 1.06, xref = "paper", yref = "paper",
+         xanchor = "center", showarrow = FALSE),
+    list(text = "<b>Wild fish guts</b>", x = .71, y = 1.06, xref = "paper", yref = "paper",
+         xanchor = "center", showarrow = FALSE)),
+  margin = list(t = 40))
+```
+
+Binning recovered between 1 and 25 MAGs per sample. Samples starting with R
+are bioreactors, and the others are wild fish guts.
+
+```{r mag-quality}
+#| fig-height: 3.5
+bin_quality %>%
+  pivot_longer(-id, names_to = "Quality", values_to = "MAGs") %>%
+  mutate(Quality = factor(str_replace(Quality, "\\.Quality", " quality"),
+                          levels = c("High quality", "Medium quality")),
+         id = factor(id, levels = bin_quality$id[order(!str_starts(bin_quality$id, "R"), bin_quality$id)])) %>%
+  plot_ly(x = ~id, y = ~MAGs, color = ~Quality, colors = c(site_teal, "#6b7588"), type = "bar",
+          hovertemplate = "%{x}: %{y} MAGs<extra>%{fullData.name}</extra>") %>%
+  layout(barmode = "stack", xaxis = list(title = "", tickangle = -90, tickfont = list(size = 10)),
+         yaxis = list(title = "MAGs recovered"), legend = list(traceorder = "normal")) %>%
+  dark_layout()
+```
+
+## Phylogenomic placement and enzyme repertoires
+
+The MAGs were placed on a tree built from a concatenated alignment of 400
+PhyloPhlAn marker genes. Closely related database genomes were included for
+context. The rings show each genome's count of algal CAZymes, sulfatases and
+peptidoglycanases, and whether the MAG came from a fish gut or a bioreactor.
+
+```{r phylo-tree}
+#| fig-height: 8
+#| fig-width: 11
+#| fig-cap: "PhyloPhlAn tree of *Kyphosus* MAGs and database relatives. Clades are shaded by phylum, the bar ring shows enzyme counts, and the outer ring shows where each MAG came from."
+hl <- tribble(
+  ~node, ~Taxonomy,
+  355, "Alphaproteobacteria", 213, "Bacillota", 281, "Bacteroidota",
+  356, "Desulfovibrionales", 204, "Gammaproteobacteria", 153, "Fibrobacterota",
+  212, "Fusobacteriota", 210, "Spirochaetota", 152, "WOR-3", 350, "Verrucomicrobiota")
+
+tree <- read.newick(kd("RAxML_bestTree.all_proteins_refined.tre"))
+tree <- ape::root(tree, node = 209)
+
+cazy_long <- bin_cazy %>%
+  pivot_longer(-bins, names_to = "Enzyme", values_to = "count") %>%
+  mutate(Enzyme = recode(Enzyme, "Red Algae CaZy" = "Red algal CAZymes",
+                         "Brown Algae CaZy" = "Brown algal CAZymes",
+                         "Green Algae CaZy" = "Green algal CAZymes",
+                         "Peptidogylcanases" = "Peptidoglycanases"),
+         Enzyme = factor(Enzyme, levels = c("Red algal CAZymes", "Brown algal CAZymes",
+                                            "Green algal CAZymes", "Sulfatases", "Peptidoglycanases")))
+
+p <- ggtree(tree, layout = "fan", open.angle = 15, colour = "grey80", linewidth = .25)
+p <- rotate_tree(ggtree::rotate(ggtree::rotate(p, 209), 208), 90)
+p +
+  geom_highlight(data = hl, aes(node = node, fill = Taxonomy), extendto = .715,
+                 alpha = .9, to.bottom = TRUE) +
+  scale_fill_manual(values = tax_colors, name = "MAG taxonomy",
+                    guide = guide_legend(order = 1, ncol = 2)) +
+  new_scale_fill() +
+  geom_fruit(data = cazy_long, geom = geom_bar, stat = "identity", orientation = "y",
+             mapping = aes(x = count, y = bins, fill = Enzyme), pwidth = .35,
+             axis.params = list(axis = "x", text.size = 1.8, nbreak = 3, text.colour = site_text)) +
+  scale_fill_manual(values = c("indianred1", "#b38f3a", "darkgreen", "gold", "orange"),
+                    name = "Enzyme class", guide = guide_legend(order = 2, ncol = 2)) +
+  new_scale_fill() +
+  geom_fruit(data = bin_source, geom = geom_col, mapping = aes(y = bins, x = dummy, fill = Source),
+             pwidth = .05) +
+  scale_fill_manual(values = c("Fish Gut" = "#4472C4", "Bioreactor" = "#A6A6A6",
+                               "Database Relative" = "#3d4452"),
+                    name = "MAG source", guide = guide_legend(order = 3)) +
+  theme(plot.background = element_rect(fill = site_bg, colour = NA),
+        panel.background = element_rect(fill = site_bg, colour = NA),
+        legend.background = element_rect(fill = site_bg, colour = NA),
+        legend.key = element_rect(fill = site_bg, colour = NA),
+        legend.text = element_text(colour = site_text, size = 11),
+        legend.title = element_text(colour = site_text, size = 12, face = "bold"),
+        legend.key.size = unit(.45, "cm"),
+        legend.position = "right", legend.box = "vertical",
+        plot.margin = margin(0, 0, 0, 0))
+```
+
+### Enzyme counts per MAG
+
+Each point is a genome. Use the menu to change the enzyme class on the y-axis. Bacteroidota are the most versatile and
+include the largest sulfatase sets, up to 297 in one genome. A few Bacillota
+(*Vallitalea*) and Verrucomicrobiota (Kiritimatiellales) MAGs also have
+unusually large and distinctive repertoires.
+
+```{r mag-scatter}
+#| fig-height: 5.5
+enzyme_cols <- c("Red Algae CaZy", "Brown Algae CaZy", "Green Algae CaZy", "Sulfatases")
+pd <- study_mags %>% mutate(`Genome size (Mb)` = `Genome size (bp)` / 1e6)
+fig <- plot_ly()
+for (i in seq_along(enzyme_cols)) {
+  col <- enzyme_cols[i]
+  fig <- fig %>% add_trace(
+    data = pd, x = ~`Genome size (Mb)`, y = pd[[col]], color = ~Taxonomy, colors = tax_colors,
+    type = "scatter", mode = "markers", visible = i == 1,
+    marker = list(size = 9, opacity = .85, line = list(width = .5, color = "#111")),
+    text = ~paste0("<b>", MAG, "</b><br>", Taxonomy, ", ", Source,
+                   "<br>", nice(col), ": ", pd[[col]], "<br>CGCs: ", CGCs),
+    hoverinfo = "text", legendgroup = ~Taxonomy, showlegend = TRUE)
+}
+ntax <- n_distinct(pd$Taxonomy)
+buttons <- lapply(seq_along(enzyme_cols), function(i) {
+  vis <- rep(seq_along(enzyme_cols) == i, each = ntax)
+  list(method = "update", label = nice(enzyme_cols[i]),
+       args = list(list(visible = vis), list(yaxis = list(title = paste(nice(enzyme_cols[i]), "per MAG"),
+                                                            gridcolor = site_grid))))
+})
+fig %>%
+  layout(updatemenus = list(list(buttons = buttons, x = 0, y = 1.15, xanchor = "left",
+                                 bgcolor = "#dfe5ec", bordercolor = "#8a93a3", font = list(color = "#111"))),
+         xaxis = list(title = "Genome size (Mb)"), yaxis = list(title = "Red algal CAZymes per MAG"),
+         legend = list(title = list(text = "<b>Phylum</b>"))) %>%
+  dark_layout()
+```
+
+```{r mag-table}
+study_mags %>%
+  transmute(MAG, Taxonomy, Source, `Size (Mb)` = `Genome size (bp)` / 1e6, CGCs,
+            `Red algal CAZymes` = `Red Algae CaZy`, `Brown algal CAZymes` = `Brown Algae CaZy`,
+            `Green algal CAZymes` = `Green Algae CaZy`, Sulfatases, Acetate, Propanoate, Butyrate,
+            `Sulfate reduction` = `Sulfate Reduction`, BGCs) %>%
+  mutate(across(c(Acetate, Propanoate, Butyrate, `Sulfate reduction`),
+                ~ if_else(str_starts(.x, "No marker"), "none", .x))) %>%
+  nb_table(page = 8) %>%
+  formatRound("Size (Mb)", digits = 2)
+```
+
+### Enzyme repertoires by lineage
+
+```{r cazy-by-phylum}
+#| fig-height: 4.5
+top_taxa <- study_mags %>% count(Taxonomy) %>% filter(n >= 5) %>% pull(Taxonomy)
+study_mags %>%
+  filter(Taxonomy %in% top_taxa) %>%
+  pivot_longer(all_of(enzyme_cols), names_to = "Class", values_to = "Genes") %>%
+  mutate(Class = factor(str_replace(nice(Class), " CAZymes", "<br>CAZymes"),
+                        levels = str_replace(nice(enzyme_cols), " CAZymes", "<br>CAZymes"))) %>%
+  plot_ly(x = ~Class, y = ~Genes, color = ~Taxonomy, colors = tax_colors, type = "box",
+          boxpoints = "all", jitter = .4, pointpos = 0, marker = list(size = 3),
+          text = ~MAG, hovertemplate = "%{text}<br>%{y} genes<extra>%{fullData.name}</extra>") %>%
+  layout(boxmode = "group", xaxis = list(title = "", tickangle = 0), yaxis = list(title = "Genes per MAG"),
+         legend = list(title = list(text = "<b>Phylum</b>"))) %>%
+  dark_layout()
+```
+
+## Short-chain fatty acid production
+
+The fish get much of their energy from short-chain fatty acids (SCFAs) made by
+fermentation. gutSMASH was used to find the pathways for each SCFA. Bubble size
+is the percentage of MAGs in a lineage that carry the pathway.
+
+```{r scfa}
+#| fig-height: 5.5
+scfa <- read.delim(kd("scfa_breakdown.tab"), check.names = FALSE) %>%
+  pivot_longer(-Taxa, names_to = "Pathway", values_to = "Fraction") %>%
+  mutate(Pathway = str_trim(Pathway),
+         Product = case_when(str_detect(Pathway, "Butyr|Lysine") ~ "Butyrate",
+                             str_detect(Pathway, "Propion") ~ "Propanoate",
+                             TRUE ~ "Acetate"),
+         Pathway = str_replace_all(Pathway, "Propionate", "Propanoate"),
+         # sentence case for product names inside a pathway name ("Pyruvate to Acetate" -> "Pyruvate to acetate")
+         Pathway = str_replace_all(Pathway, "(?<=.)\\b(Acetate|Propanoate|Butyrate|Formate)", tolower),
+         Pathway = factor(Pathway, levels = unique(Pathway)),
+         Taxa = factor(Taxa, levels = rev(c("Bacillota", "Bacteroidota", "Gammaproteobacteria",
+                                            "Desulfovibrionales", "Verrucomicrobiota"))))
+scfa %>%
+  filter(Fraction > 0) %>%
+  mutate(Product = factor(Product, levels = c("Acetate", "Propanoate", "Butyrate")),
+         Pathway = droplevels(Pathway),
+         Pathway = factor(Pathway, levels = rev(levels(Pathway))),
+         Taxa = factor(Taxa, levels = rev(levels(Taxa)))) %>%
+  plot_ly(x = ~Taxa, y = ~Pathway, type = "scatter", mode = "markers", color = ~Product,
+          colors = c(Acetate = "#ee5f5b", Propanoate = "#62c462", Butyrate = "#52adc8"),
+          customdata = ~Fraction,
+          marker = list(size = ~ 6 + 40 * sqrt(Fraction), sizemode = "diameter", opacity = .85,
+                        line = list(color = "#111", width = .5)),
+          hovertemplate = "%{x}<br>%{y}<br>%{customdata:.0%} of MAGs<extra></extra>") %>%
+  layout(xaxis = list(title = "", side = "top", tickangle = -30), yaxis = list(title = ""),
+         margin = list(t = 110),
+         legend = list(title = list(text = "<b>Product</b>"), itemsizing = "constant")) %>%
+  dark_layout()
+```
+
+## Similarity to reference enzymes
+
+Each binned CAZyme and sulfatase was compared against three references: other
+MAGs in this study, GenBank nr, and the curated CAZy or SulfAtlas databases.
+Across all annotated genes, the median best-hit identity is 63% to GenBank nr,
+56% to CAZy and 36% to SulfAtlas. Most are distant from characterized
+enzymes, so the *Kyphosus* gut is a likely source of new seaweed-degrading
+enzymes.
+
+The plot shows the five CAZyme and five sulfatase families (from the
+algal-polysaccharide families analyzed in the paper) whose genes are least
+similar to anything in GenBank nr. Their median best-hit identity is about
+40 to 60%.
+
+```{r novelty}
+#| fig-height: 4.5
+nov <- read.delim(kd("cazy_sulf_nr.tsv")) %>%
+  mutate(across(c(nr_id, self_id, sulf_id, dbCAN_id), ~ suppressWarnings(as.numeric(.x))))
+sulf_fams <- c("S1_13","S1_72","S1_19","S1_8","S1_24","S1_4","S1_11","S1_20",
+               "S1_15","S1_16","S1_17","S1_28","S1_25","S1_14","S1_27")
+cazy_fams <- c("GH16_16","GH86","GH16_11","GH10","GH82","GH50","GH117","GH150",
+               "GH16_12","PL40","PL6","PL38","GH29","PL8","GH95")
+db_cols <- c("Other MAGs in this study" = "#8cd2d5", "GenBank nr" = "#8a93a3", "CAZy / SulfAtlas" = "#f0c75e")
+
+# the 5 families per class with the lowest median identity to GenBank nr
+least_similar <- function(fams) {
+  nov %>% filter(annot %in% fams) %>% group_by(annot) %>%
+    summarise(med = median(nr_id, na.rm = TRUE)) %>% slice_min(med, n = 5) %>% pull(annot)
+}
+cz <- least_similar(cazy_fams); sf <- least_similar(sulf_fams)
+
+nov_long <- bind_rows(
+  nov %>% filter(annot %in% cz) %>%
+    transmute(annot, `Other MAGs in this study` = self_id, `GenBank nr` = nr_id, `CAZy / SulfAtlas` = dbCAN_id),
+  nov %>% filter(annot %in% sf) %>%
+    transmute(annot, `Other MAGs in this study` = self_id, `GenBank nr` = nr_id, `CAZy / SulfAtlas` = sulf_id)
+) %>% pivot_longer(-annot, names_to = "Database", values_to = "Identity") %>%
+  filter(!is.na(Identity)) %>%
+  mutate(annot = factor(annot, levels = c(cz, sf)),
+         Database = factor(Database, levels = names(db_cols)))
+
+plot_ly(nov_long, x = ~annot, y = ~Identity, color = ~Database, colors = db_cols, type = "box",
+        boxpoints = FALSE,
+        hovertemplate = "%{x}<br>%{y:.1f}% identity<extra>%{fullData.name}</extra>") %>%
+  layout(boxmode = "group",
+         xaxis = list(title = "Enzyme family (least similar first)",
+                      categoryorder = "array", categoryarray = c(cz, sf)),
+         yaxis = list(title = "% identity to best hit", range = c(20, 102), ticksuffix = "%"),
+         shapes = list(list(type = "line", x0 = 4.5, x1 = 4.5, y0 = 0, y1 = 1, yref = "paper",
+                            line = list(dash = "dot", color = "#6b7588"))),
+         annotations = list(
+           list(x = 2, y = 1.07, yref = "paper", text = "<b>CAZymes</b>", showarrow = FALSE),
+           list(x = 7, y = 1.07, yref = "paper", text = "<b>Sulfatases</b>", showarrow = FALSE)),
+         legend = list(orientation = "h", y = -.22)) %>%
+  dark_layout()
+```
+
+## A GH86 β-agarase/β-porphyranase with an undescribed domain
+
+GH86 enzymes cut agar and porphyran, the main glycans of red algae. The gene
+tree of binned GH86 sequences has a clade from three different phyla
+(Bacillota, Bacteroidota and Verrucomicrobiota) that share an N-terminal region
+with no characterized function. Most of these sequences also have a signal
+peptide, so they are likely exported. This is consistent with several taxa
+breaking these glycans down outside the cell.
+
+```{r gh86}
+#| fig-height: 5
+#| fig-width: 8
+#| fig-cap: "GH86 gene tree. Each tip is one binned GH86 sequence, colored by the phylum of its MAG; filled points have a signal peptide."
+gh <- ape::root(ape::read.tree(kd("GH86.tre")), node = 112)
+tips <- gh$tip.label
+prot <- read.delim(kd("all_cazy_prot_HGT.tab")) %>% filter(prot %in% tips) %>%
+  distinct(prot, .keep_all = TRUE)
+
+ggtree(gh, layout = "circular", colour = "grey75", linewidth = .3) %<+% prot +
+  geom_tippoint(aes(colour = taxonomy, shape = signalp), size = 3.2, stroke = .9) +
+  scale_colour_manual(values = c(Bacillota = "#ff5c5c", Bacteroidota = "#4ea3ff",
+                                 Verrucomicrobiota = "#d5b2f7"), na.value = "grey60",
+                      name = "Gene taxonomy", guide = guide_legend(order = 1)) +
+  scale_shape_manual(values = c(Y = 16, N = 1), labels = c(Y = "Exported", N = "Not exported"),
+                     na.value = 4, name = "Signal peptide") +
+  theme(plot.background = element_rect(fill = site_bg, colour = NA),
+        panel.background = element_rect(fill = site_bg, colour = NA),
+        legend.background = element_rect(fill = site_bg, colour = NA),
+        legend.key = element_rect(fill = site_bg, colour = NA),
+        legend.text = element_text(colour = site_text, size = 12),
+        legend.title = element_text(colour = site_text, size = 13, face = "bold"),
+        plot.margin = margin(0, 0, 0, 0))
+```
+
+::: {.paper-figure}
+![The published GH86 figure, which aligns each sequence against the tree. Green: signal peptide; magenta: the undescribed N-terminal region; grey: catalytic domain.](https://raw.githubusercontent.com/AaronAOliver/KyphosusMAGs/main/figures/GH86_gene_alignment.svg){fig-align="center" width="85%"}
+:::
+
+## Biosynthetic gene clusters
+
+antiSMASH found `r nrow(bin_bgc)` biosynthetic gene clusters (BGCs) in the MAGs.
+BiG-SLiCE then measured each one's distance to the nearest known gene cluster
+family (GCF). Clusters above the dotted line at a distance of 900 are counted as
+novel.
+
+The sunburst groups the clusters by antiSMASH class (inner ring) and product
+type (outer ring). Click a class to zoom in.
+
+```{r bgc-sunburst}
+#| fig-height: 5
+cls_map <- c(RiPPs = "RiPP", NRPS = "NRPS", Terpene = "Terpene", PKSI = "PKS", PKSother = "PKS",
+             Saccharides = "Other", `PKS-NRP_Hybrids` = "Other", Others = "Other")
+bgc <- bin_bgc %>% mutate(Class = recode(class, !!!cls_map),
+                          product = str_replace_all(product, ";", " / "))
+sb <- bind_rows(
+  bgc %>% count(Class) %>% transmute(ids = Class, labels = Class, parents = "", n),
+  bgc %>% count(Class, product) %>% transmute(ids = paste(Class, product, sep = "-"),
+                                              labels = product, parents = Class, n)
+)
+plot_ly(sb, ids = ~ids, labels = ~labels, parents = ~parents, values = ~n,
+        type = "sunburst", branchvalues = "total",
+        hovertemplate = "<b>%{label}</b><br>%{value} BGCs<extra></extra>",
+        marker = list(colors = NULL)) %>%
+  dark_layout(margin = list(t = 10, b = 10, l = 10, r = 10),
+              sunburstcolorway = c("#8cd2d5", "#ee5f5b", "#f89406", "#62c462", "#b38bd6"),
+              extendsunburstcolors = TRUE)
+```
+
+```{r bgc-distance}
+#| fig-height: 4.5
+set.seed(1)
+bgc %>%
+  mutate(x = as.numeric(factor(Class, levels = c("RiPP", "NRPS", "Terpene", "PKS", "Other"))),
+         xj = x + runif(n(), -.3, .3)) %>%
+  plot_ly(x = ~xj, y = ~distance, color = ~completeness,
+          colors = c(Complete = site_teal, Fragmented = "#6b7588"),
+          type = "scatter", mode = "markers", marker = list(size = 7, opacity = .8),
+          text = ~paste0("<b>", product, "</b><br>", MAG, "<br>", taxonomy,
+                         "<br>distance to nearest GCF: ", distance),
+          hoverinfo = "text") %>%
+  layout(xaxis = list(title = "", tickvals = 1:5, ticktext = c("RiPP", "NRPS", "Terpene", "PKS", "Other")),
+         yaxis = list(title = "BiG-SLiCE distance to nearest GCF"),
+         legend = list(title = list(text = "<b>BGC</b>")),
+         shapes = list(list(type = "line", x0 = .5, x1 = 5.5, y0 = 900, y1 = 900,
+                            line = list(dash = "dot", color = "#ee5f5b"))),
+         annotations = list(list(x = 0.5, y = 900, xanchor = "left", yanchor = "bottom", showarrow = FALSE,
+                                 text = "novelty threshold (900)", bgcolor = "rgba(37,42,52,.85)",
+                                 font = list(color = "#ee5f5b", size = 11)))) %>%
+  dark_layout()
+```
+
+## Takeaways
+
+- Bacteroidota MAGs carry the widest range of algal-polysaccharide enzymes,
+  but few single genomes can fully break down any one sulfated algal glycan.
+- The enzymes needed are split across lineages, and many have signal peptides,
+  suggesting that *Kyphosus* symbionts degrade seaweed jointly, outside the
+  cell.
+- Many of the CAZymes, sulfatases and BGCs are distant from characterized
+  references, so these bioreactor communities are a source of new enzymes.
+
+::: {.callout-note collapse="true"}
+## Reproducing this page
+The notebook reads the processed tables in
+[`KyphosusMAGs/data`](https://github.com/AaronAOliver/KyphosusMAGs/tree/main/data).
+The original figure scripts (`krumbs_*.R`) are in the same repository.
+Upstream steps (assembly, binning, dbCAN, gutSMASH, antiSMASH, BiG-SLiCE) are
+described in the paper's Methods.
+
+```{r session}
+#| echo: true
+sessionInfo()$R.version$version.string
+```
+:::

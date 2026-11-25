@@ -11,3 +11,7 @@ citation: '<b>Oliver, A.</b>, Podell, S., Wegley Kelly, L. <i>et al.</i> Enricha
 Bioreactors inoculated with fish gut microbiomes maintain the genomic capacity to degrade seaweed polysaccharides <i>in vitro</i>. 
 
 [Open access link to paper!](https://journals.asm.org/doi/full/10.1128/mbio.00496-24)
+
+[Download paper here!](/files/Krumbs2024.pdf)
+
+[Explore the interactive analysis notebook!](/notebooks/kyphosus-mags.html)
