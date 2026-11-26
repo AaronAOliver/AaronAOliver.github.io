@@ -1,0 +1,12 @@
+{%- comment -%}
+  Link buttons for one publication, used on /publications/ and on each paper's page.
+  Usage: {% include pub-links.html post=post %}
+  Front matter used: notebook_url, pdf_url, doi_url, web_url, web_label.
+{%- endcomment -%}
+{%- assign p = include.post -%}
+<div class="pill-row">
+{%- if p.notebook_url %}<a class="pill pill--accent" href="{{ p.notebook_url }}"><i class="fas fa-chart-bar" aria-hidden="true"></i> Notebook</a>{% endif %}
+{%- if p.pdf_url %}<a class="pill" href="{{ p.pdf_url }}"><i class="fas fa-file-pdf" aria-hidden="true"></i> PDF</a>{% endif %}
+{%- if p.doi_url %}<a class="pill" href="{{ p.doi_url }}"><i class="fas fa-external-link-alt" aria-hidden="true"></i> {% if p.venue contains 'bioRxiv' %}Preprint{% else %}Paper{% endif %}</a>{% endif %}
+{%- if p.web_url %}<a class="pill" href="{{ p.web_url }}"><i class="fas fa-database" aria-hidden="true"></i> {{ p.web_label | default: 'Website' }}</a>{% endif %}
+</div>

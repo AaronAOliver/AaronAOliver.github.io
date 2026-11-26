@@ -24,7 +24,28 @@ layout: default
     {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
 
     <div class="page__inner-wrap">
-      {% unless page.header.overlay_color or page.header.overlay_image %}
+      {% if page.collection == 'publications' %}
+        <header class="pub-head">
+          <div class="pub__badges"><span class="pub__venue">{{ page.venue }}, {{ page.date | date: "%Y" }}</span></div>
+          <h1 class="page__title" itemprop="headline">{{ page.title }}</h1>
+          {% if page.citation %}<div class="cite-box"><span class="eyebrow">Citation</span>{{ page.citation }}</div>{% endif %}
+          {% include pub-links.html post=page %}
+        </header>
+      {% elsif page.collection == 'portfolio' %}
+        <header class="proj-head">
+          {% if page.paper_label %}<div class="proj-card__meta"><span class="proj-card__meta-text">{{ page.paper_label }}</span></div>{% endif %}
+          <h1 class="page__title" itemprop="headline">{{ page.title }}</h1>
+          {% if page.excerpt %}<p class="lead">{{ page.excerpt | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
+          <div class="pill-row">
+            <a class="pill pill--accent" href="{{ page.link }}"><i class="fas fa-chart-bar" aria-hidden="true"></i> Open the notebook</a>
+            {% if page.paper_url %}<a class="pill" href="{{ page.paper_url }}"><i class="fas fa-file-alt" aria-hidden="true"></i> Paper</a>{% endif %}
+            {% if page.code_url %}<a class="pill" href="{{ page.code_url }}"><i class="fab fa-github" aria-hidden="true"></i> Code</a>{% endif %}
+            {% if page.web_url %}<a class="pill" href="{{ page.web_url }}"><i class="fas fa-database" aria-hidden="true"></i> {{ page.web_label | default: 'Website' }}</a>{% endif %}
+          </div>
+          {% if page.thumbnail %}<a class="proj-head__thumb" href="{{ page.link }}"><img src="{{ base_path }}{{ page.thumbnail }}" alt="{{ page.thumbnail_alt | default: '' }}"></a>{% endif %}
+        </header>
+      {% endif %}
+      {% unless page.header.overlay_color or page.header.overlay_image or page.collection == 'publications' or page.collection == 'portfolio' %}
         <header>
           {% if page.title %}<h1 class="page__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>{% endif %}
           {% if page.read_time %}
@@ -54,7 +75,7 @@ layout: default
 
       <section class="page__content" itemprop="text">
         {{ content }}
-        {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
+        {% if page.link and page.collection != 'portfolio' %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
       <footer class="page__meta">
@@ -63,10 +84,6 @@ layout: default
         {% endif %}
         {% include page__taxonomy.html %}
       </footer>
-
-      {% if page.share %}{% include social-share.html %}{% endif %}
-
-      {% include post_pagination.html %}
     </div>
 
     {% if site.comments.provider and page.comments %}

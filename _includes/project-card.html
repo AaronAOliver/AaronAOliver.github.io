@@ -1,0 +1,21 @@
+{%- comment -%}
+  One analysis notebook card, used on the home page and /portfolio/.
+  Usage: {% include project-card.html post=post %}
+  Front matter used here: link (the notebook), thumbnail, thumbnail_alt,
+  paper_url, paper_label, code_url.
+{%- endcomment -%}
+{%- include base_path -%}
+{%- assign p = include.post -%}
+<article class="proj-card">
+<a class="proj-card__thumb" href="{{ p.link }}" aria-label="Open the {{ p.title | strip_html }} notebook"><img src="{{ base_path }}{{ p.thumbnail }}" alt="{{ p.thumbnail_alt | default: '' }}" loading="lazy"></a>
+<div class="proj-card__body">
+<div class="proj-card__meta"><span class="proj-card__meta-text">{% if p.paper_label %}{{ p.paper_label }}{% else %}{{ p.date | date: '%Y' }}{% endif %}</span></div>
+<h3 class="proj-card__title"><a href="{{ base_path }}{{ p.url }}">{{ p.title }}</a></h3>
+<p class="proj-card__text">{{ p.excerpt | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+<div class="pill-row">
+<a class="pill pill--accent" href="{{ p.link }}"><i class="fas fa-chart-bar" aria-hidden="true"></i> Open notebook</a>
+{%- if p.paper_url %}<a class="pill" href="{{ p.paper_url }}"><i class="fas fa-file-alt" aria-hidden="true"></i> Paper</a>{% endif %}
+{%- if p.code_url %}<a class="pill" href="{{ p.code_url }}"><i class="fab fa-github" aria-hidden="true"></i> Code</a>{% endif %}
+</div>
+</div>
+</article>

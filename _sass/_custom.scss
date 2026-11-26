@@ -1,0 +1,495 @@
+/* ==========================================================================
+   Site additions: home page, publication list, portfolio cards, figures
+   Uses the palette in _variables.scss so it matches the notebooks.
+   ========================================================================== */
+
+$panel-bg      : #2d3340;
+$panel-bg-dark : #1f232b;
+$panel-line    : #3d4452;
+$muted-text    : #9ba1a6;
+$soft-text     : #c9cdd2;
+$mono-font     : ui-monospace, "SF Mono", "Cascadia Code", "Segoe UI Mono", Consolas, Menlo, monospace;
+
+/* --------------------------------------------------------------------------
+   General polish
+   -------------------------------------------------------------------------- */
+
+::selection {
+  background: rgba($primary-color, 0.35);
+}
+
+.masthead {
+  background: rgba($background-color, 0.96);
+}
+
+.page__title {
+  letter-spacing: -0.01em;
+}
+
+.page__content h2,
+.archive h2 {
+  margin-top: 1.8em;
+}
+
+.author__avatar img {
+  border: 2px solid $panel-line;
+  box-shadow: 0 0 0 4px rgba($primary-color, 0.12);
+}
+
+.eyebrow {
+  display: block;
+  margin: 0 0 0.35em;
+  font-family: $mono-font;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: $primary-color;
+}
+
+.lead {
+  font-size: 1.08em;
+  line-height: 1.6;
+  color: $text-color;
+}
+
+/* --------------------------------------------------------------------------
+   Pills (link buttons)
+   -------------------------------------------------------------------------- */
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0;
+}
+
+a.pill,
+.page__content a.pill,
+.archive a.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.3em 0.85em;
+  border: 1px solid $panel-line;
+  border-radius: 999px;
+  background: rgba(#fff, 0.02);
+  color: $text-color;
+  font-family: $mono-font;
+  font-size: 0.74em;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+
+  i {
+    font-size: 0.95em;
+    color: $primary-color;
+  }
+
+  &:hover {
+    border-color: $primary-color;
+    color: $primary-color;
+    text-decoration: none;
+  }
+}
+
+a.pill--accent,
+.page__content a.pill--accent,
+.archive a.pill--accent {
+  background: $primary-color;
+  border-color: $primary-color;
+  color: $panel-bg-dark;
+  font-weight: 600;
+
+  i {
+    color: $panel-bg-dark;
+  }
+
+  &:hover {
+    background: transparent;
+    color: $primary-color;
+
+    i {
+      color: $primary-color;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Home page
+   -------------------------------------------------------------------------- */
+
+/* Education: a cap icon, the degree, then the school in muted text */
+.edu-list {
+  margin: 0.8em 0 0.4em;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75em;
+    margin: 0 0 0.95em;
+  }
+
+  > li > i {
+    flex: 0 0 1.4em;
+    margin-top: 0.22em;
+    color: $primary-color;
+    text-align: center;
+  }
+}
+
+.edu-degree {
+  display: block;
+  color: $text-color;
+}
+
+.edu-school {
+  display: block;
+  color: $muted-text;
+  font-size: 0.85em;
+}
+
+.edu-note {
+  display: block;
+  margin-top: 0.15em;
+  color: $muted-text;
+  font-size: 0.8em;
+}
+
+/* Interests: a plain bulleted list with teal markers */
+.interest-list {
+  margin: 0.8em 0 0.4em;
+  padding-left: 1.3em;
+
+  li {
+    margin: 0 0 0.35em;
+  }
+
+  li::marker {
+    color: $primary-color;
+  }
+}
+
+/* Figures on the home page and elsewhere: white figure on a dark card */
+figure.fig-card {
+  display: block;
+  margin: 1.4em 0 2.2em;
+  overflow: hidden;
+  border: 1px solid $panel-line;
+  border-radius: 8px;
+  background: $panel-bg;
+
+  .fig-card__img {
+    display: block;
+    padding: 0.9em;
+    background: #fff;
+    text-align: center;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    margin: 0;
+    padding: 0.7em 1.05em 0.75em;
+    border-top: 1px solid $panel-line;
+    color: $soft-text;
+    font-family: $global-font-family;
+    font-size: 0.82em;
+    line-height: 1.45;
+  }
+
+  .fig-card__tag {
+    margin-right: 0.7em;
+    color: $primary-color;
+    font-family: $mono-font;
+    font-size: 0.85em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Project cards (home page and portfolio)
+   -------------------------------------------------------------------------- */
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.1em;
+  margin: 0.4em 0 1.5em;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.proj-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid $panel-line;
+  border-radius: 8px;
+  background: $panel-bg;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba($primary-color, 0.6);
+    box-shadow: 0 10px 28px rgba(#000, 0.35);
+    transform: translateY(-2px);
+  }
+}
+
+.proj-card__thumb {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid $panel-line;
+  background: $panel-bg-dark;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+}
+
+.proj-card:hover .proj-card__thumb img {
+  transform: scale(1.03);
+}
+
+.proj-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0.95em 1.1em 1.1em;
+}
+
+.proj-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+  color: $muted-text;
+  font-family: $mono-font;
+  font-size: 0.85em;
+}
+
+.proj-card__meta-text {
+  font-size: 0.78em;
+  letter-spacing: 0.04em;
+}
+
+.proj-card__title {
+  margin: 0 0 0.45em;
+  font-size: 1.02em;
+  line-height: 1.32;
+
+  a,
+  a:visited {
+    color: $text-color;
+    text-decoration: none !important;
+  }
+
+  a:hover {
+    color: $primary-color;
+  }
+}
+
+.proj-card__text {
+  margin: 0 0 0.75em;
+  color: $soft-text;
+  font-size: 0.84em;
+  line-height: 1.5;
+}
+
+.proj-card .pill-row {
+  margin-top: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Publication list
+   -------------------------------------------------------------------------- */
+
+.pub-intro {
+  color: $soft-text;
+  font-size: 0.92em;
+}
+
+.pub-year {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  margin: 2em 0 0.8em;
+  color: $primary-color;
+  font-family: $mono-font;
+  font-size: 0.95em;
+  font-weight: 600;
+
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $panel-line;
+  }
+}
+
+.pub {
+  margin: 0 0 0.85em;
+  padding: 0.95em 1.15em 1em;
+  border: 1px solid $panel-line;
+  border-left: 3px solid $panel-line;
+  border-radius: 6px;
+  background: $panel-bg;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba($primary-color, 0.45);
+    border-left-color: $primary-color;
+  }
+}
+
+.pub__badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.45em;
+}
+
+.pub__venue {
+  margin-right: 0.15em;
+  color: $primary-color;
+  font-size: 0.82em;
+  font-style: italic;
+}
+
+.pub__title {
+  margin: 0 0 0.35em;
+  font-size: 1.02em;
+  line-height: 1.38;
+
+  a,
+  a:visited {
+    color: $text-color;
+    text-decoration: none !important;
+  }
+
+  a:hover {
+    color: $primary-color;
+  }
+}
+
+.pub__authors {
+  margin: 0 0 0.4em;
+  color: $muted-text;
+  font-size: 0.82em;
+
+  b {
+    color: $text-color;
+  }
+}
+
+.pub__excerpt {
+  margin: 0 0 0.75em;
+  color: $soft-text;
+  font-size: 0.86em;
+}
+
+/* Header block on a single publication page */
+.pub-head {
+  margin-bottom: 1.6em;
+
+  .page__title {
+    margin: 0.35em 0 0.45em;
+    font-size: 1.6em;
+    line-height: 1.25;
+  }
+
+  .pub__authors {
+    font-size: 0.9em;
+  }
+}
+
+.cite-box {
+  margin: 1em 0 0;
+  padding: 0.75em 1em 0.8em;
+  border: 1px solid $panel-line;
+  border-left: 3px solid $primary-color;
+  border-radius: 6px;
+  background: $panel-bg;
+  color: $soft-text;
+  font-size: 0.84em;
+  line-height: 1.5;
+}
+
+/* Header block on a single portfolio page */
+.proj-head {
+  margin-bottom: 1.6em;
+
+  .page__title {
+    margin: 0.3em 0 0.5em;
+    font-size: 1.7em;
+    line-height: 1.2;
+  }
+
+  .proj-head__thumb {
+    display: block;
+    margin: 1.1em 0 1em;
+    overflow: hidden;
+    border: 1px solid $panel-line;
+    border-radius: 8px;
+    background: $panel-bg-dark;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+}
+
+/* Teaching and other plain archive lists read as cards too */
+.list__item .archive__item {
+  margin-bottom: 0.85em;
+  padding: 0.95em 1.15em 0.4em;
+  border: 1px solid $panel-line;
+  border-radius: 6px;
+  background: $panel-bg;
+
+  .archive__item-title {
+    margin-top: 0;
+
+    a {
+      color: $text-color;
+      text-decoration: none;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+/* CV embed */
+.cv-frame {
+  display: block;
+  width: 100%;
+  height: 80vh;
+  min-height: 560px;
+  border: 1px solid $panel-line;
+  border-radius: 8px;
+  background: $panel-bg-dark;
+}

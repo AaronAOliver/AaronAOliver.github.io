@@ -1,14 +1,18 @@
 ---
 layout: archive
 title: "Portfolio"
+description: "Bioinformatics projects by Aaron Oliver, each with an interactive analysis notebook that reproduces the paper's figures."
 permalink: /portfolio/
 author_profile: true
 ---
 
 {% include base_path %}
 
+<p class="pub-intro">Each project has an interactive notebook that rebuilds the paper's main analyses from the data in its GitHub repository. The R notebooks are laid out like R Markdown reports and the Python ones like Jupyter notebooks. All four are also listed on the <a href="/notebooks/">notebook index</a>.</p>
 
-{% for post in site.portfolio %}
-  {% include archive-single.html %}
-{% endfor %}
-
+<div class="proj-grid">
+{%- assign projs = site.portfolio | sort: "date" | reverse -%}
+{%- for post in projs -%}
+{% include project-card.html post=post %}
+{%- endfor -%}
+</div>

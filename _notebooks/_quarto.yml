@@ -10,25 +10,27 @@ project:
     - mpcgc.qmd
   resources:
     - assets/
+    - listings.json
 
 website:
   title: "Aaron Oliver"
   site-url: https://aaronoliver.dev/notebooks
+  favicon: assets/favicon.png
   page-navigation: true
   search: false
-  # same header as aaronoliver.dev: name, then Publications, Teaching, CV, Portfolio
+  # same header as aaronoliver.dev: name, then Portfolio, Publications, CV, Teaching
   navbar:
     title: "Aaron Oliver"
     href: https://aaronoliver.dev/
     left:
-      - href: https://aaronoliver.dev/publications/
-        text: Publications
-      - href: https://aaronoliver.dev/teaching/
-        text: Teaching
-      - href: https://aaronoliver.dev/cv/
-        text: CV
       - href: https://aaronoliver.dev/portfolio/
         text: Portfolio
+      - href: https://aaronoliver.dev/publications/
+        text: Publications
+      - href: https://aaronoliver.dev/cv/
+        text: CV
+      - href: https://aaronoliver.dev/teaching/
+        text: Teaching
   page-footer:
     left: "**Follow:** [<i class='bi bi-github'></i> GitHub](https://github.com/AaronAOliver)"
     right: "&copy; 2026 Aaron Oliver. Notebooks rendered with [Quarto](https://quarto.org)."

@@ -1,0 +1,21 @@
+---
+layout: archive
+title: "Publications"
+description: "Papers and preprints by Aaron Oliver on marine microbial genomics, seaweed-degrading microbiomes and microalgal biotechnology."
+permalink: /publications/
+author_profile: true
+---
+
+{% include base_path %}
+
+<p class="pub-intro">You can also find my articles on <a href="{{ site.author.googlescholar }}">my Google Scholar profile</a>.</p>
+
+{% comment %} Posters keep their own page (the QR code links there) but stay off this list. {% endcomment %}
+{% assign pubs = site.publications | where_exp: "p", "p.pubtype != 'poster'" | sort: "date" | reverse %}
+{% assign by_year = pubs | group_by_exp: "p", "p.date | date: '%Y'" %}
+{% for year in by_year %}
+<h2 class="pub-year" id="y{{ year.name }}">{{ year.name }}</h2>
+{% for post in year.items %}
+{% include pub-card.html post=post %}
+{% endfor %}
+{% endfor %}

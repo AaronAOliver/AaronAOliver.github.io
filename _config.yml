@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Aaron Oliver"
 title_separator          : "-"
 name                     : &name "Aaron Oliver"
-description              : &description "PhD Student at UCSD"
+description              : &description "Computational biologist"
 url                      : https://aaronoliver.dev # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "AaronAOliver/AaronAOliver.github.io"
@@ -62,13 +62,17 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 :  # Open Graph/Twitter default site image
+og_image                 : "avatar.jpg" # Open Graph/Twitter default site image, in /images/
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
+  type                   : Person
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
+    - "https://scholar.google.com/citations?user=uSxTtFEAAAAJ"
+    - "https://orcid.org/0000-0002-0410-8284"
+    - "https://github.com/AaronAOliver"
+    - "https://www.linkedin.com/in/aaronaoliver"
 
 
 # Analytics
@@ -81,8 +85,8 @@ analytics:
 # Site Author
 author:
   name             : "Aaron Oliver"
-  avatar           : "PA074860.JPG"
-  bio              : "Computational marine microbiologist"
+  avatar           : "avatar.jpg"
+  bio              : "Computational biologist"
   location         : "San Diego, CA"
   employer         : 
   pubmed           : 
@@ -130,6 +134,10 @@ exclude:
   - .jekyll-assets-cache
   - .sass-cache
   - CHANGELOG
+  - CHANGELOG.md
+  - CONTRIBUTING.md
+  - README.md
+  - markdown_generator
   - Capfile
   - Gemfile
   - Gruntfile.js
@@ -244,6 +252,16 @@ defaults:
       layout: talk
       author_profile: true
       share: true
+  # charts embedded in the notebooks: keep them out of sitemap.xml
+  - scope:
+      path: "notebooks/assets"
+    values:
+      sitemap: false
+  # old CV copy: kept, but not listed in sitemap.xml
+  - scope:
+      path: "files/aaron_oliver_cv_july25.pdf"
+    values:
+      sitemap: false
 
 # Sass/SCSS
 sass:

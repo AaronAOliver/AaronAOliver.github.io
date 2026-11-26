@@ -2,7 +2,7 @@
 title: "Seaweed-degrading gut symbionts of *Kyphosus* fish"
 subtitle: "Genome-resolved metagenomics of wild fish guts and bioreactor enrichments"
 description: "MAG recovery, phylogenomics, CAZyme and sulfatase repertoires, SCFA pathways and biosynthetic gene clusters from Kyphosus gut microbiomes."
-image: assets/thumbs/kyphosus.jpg
+image: assets/thumbs/kyphosus.png
 date: 2024-03-27
 categories: [metagenomics, MAGs, CAZymes, R]
 author: "Aaron Oliver"
@@ -190,6 +190,8 @@ p +
              pwidth = .05) +
   scale_fill_manual(values = c("Fish Gut" = "#4472C4", "Bioreactor" = "#A6A6A6",
                                "Database Relative" = "#3d4452"),
+                    breaks = c("Fish Gut", "Bioreactor", "Database Relative"),
+                    labels = c("Fish gut", "Bioreactor", "Database relative"),
                     name = "MAG source", guide = guide_legend(order = 3)) +
   theme(plot.background = element_rect(fill = site_bg, colour = NA),
         panel.background = element_rect(fill = site_bg, colour = NA),
@@ -204,10 +206,14 @@ p +
 
 ### Enzyme counts per MAG
 
-Each point is a genome. Use the menu to change the enzyme class on the y-axis. Bacteroidota are the most versatile and
-include the largest sulfatase sets, up to 297 in one genome. A few Bacillota
-(*Vallitalea*) and Verrucomicrobiota (Kiritimatiellales) MAGs also have
-unusually large and distinctive repertoires.
+Each point is a MAG from this study. Use the menu to change the enzyme class on
+the y-axis. Bacteroidota are the most versatile, with up to
+`r max(filter(study_mags, Taxonomy == "Bacteroidota")[["Red Algae CaZy"]], na.rm = TRUE)` red-algal
+CAZymes and `r max(filter(study_mags, Taxonomy == "Bacteroidota")$Sulfatases, na.rm = TRUE)` sulfatases
+in one MAG. A few Bacillota (*Vallitalea*) and Verrucomicrobiota MAGs also have
+unusually large and distinctive repertoires, and the largest sulfatase set,
+`r max(study_mags$Sulfatases, na.rm = TRUE)` genes, belongs to a
+`r study_mags$Taxonomy[which.max(study_mags$Sulfatases)]` MAG.
 
 ```{r mag-scatter}
 #| fig-height: 5.5
@@ -454,16 +460,6 @@ bgc %>%
                                  font = list(color = "#ee5f5b", size = 11)))) %>%
   dark_layout()
 ```
-
-## Takeaways
-
-- Bacteroidota MAGs carry the widest range of algal-polysaccharide enzymes,
-  but few single genomes can fully break down any one sulfated algal glycan.
-- The enzymes needed are split across lineages, and many have signal peptides,
-  suggesting that *Kyphosus* symbionts degrade seaweed jointly, outside the
-  cell.
-- Many of the CAZymes, sulfatases and BGCs are distant from characterized
-  references, so these bioreactor communities are a source of new enzymes.
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this page

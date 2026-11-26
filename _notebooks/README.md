@@ -53,6 +53,10 @@ page picks its style with `body-classes: nb-rmd` or `body-classes: nb-jupyter`
 in its front matter. The styles are in `assets/portfolio.scss`, and the prompts
 are added by `assets/notebook.html`.
 
+The card images in `assets/thumbs/` are drawn from each notebook's own data.
+The main site's home and portfolio pages also use them (through the
+`thumbnail` field in `_portfolio/*.md`), so keep the file names in step.
+
 ## Notes
 
 - The interactive Cytoscape networks in `assets/scone/` are copied from

@@ -38,7 +38,7 @@ Mapping RNA reads back to MAGs shows which genome expresses which enzyme, and
 when. The early colonists detoxify polyphenols and degrade alginate. Later
 guilds take on the more recalcitrant sulfated polysaccharides.
 
-This repository contains my part of the study: the genome-resolved expression
+This notebook covers my part of the study: the genome-resolved expression
 analysis and the figures built from it.
 
 ```{r load}
@@ -380,17 +380,6 @@ later. The panels below are the published versions of these figures.
 ![Expression of phloroglucinol, caffeate, catalase (ROS) and dehalogenase genes, with the taxonomy of the expressing MAG.](https://raw.githubusercontent.com/AaronAOliver/Enrichments_metatranscriptomics/main/combined_detox_tax_distributions.svg){width="100%"}
 :::
 :::
-
-## Takeaways
-
-- Kept in vitro, the hindgut microbiome reproduces a staged breakdown of
-  seaweed. Gammaproteobacteria detoxify polyphenols and degrade alginate
-  first. Bacillota, Bacteroidota and Verrucomicrobiota guilds then attack the
-  sulfated polysaccharides.
-- Sulfatase-rich Bacteroidota and Verrucomicrobiota MAGs put up to 5 to 7% of
-  their transcription into sulfatases at their peak.
-- These microcosms are a tractable model for discovering CAZymes and marine
-  polyphenol-degradation pathways.
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this page

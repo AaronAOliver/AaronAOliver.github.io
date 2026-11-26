@@ -1,1 +1,1 @@
-Aaron Oliver's personal website. Check it out at [aaronoliver.dev](aaronoliver.dev)!
+Aaron Oliver's personal website. Check it out at [aaronoliver.dev](https://aaronoliver.dev)!

@@ -42,6 +42,8 @@ $toc-active-border: $site-teal;
   .nav-link { color: $site-teal !important; font-size: 1.05rem; padding-left: 1rem !important; padding-right: 0 !important; }
   .nav-link:hover, .navbar-brand:hover .navbar-title { color: #fff !important; }
   .navbar-toggler { background: $site-teal; border: 0; }
+  // dark bars on the teal button (the theme draws them teal, which made the button look blank)
+  .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23252a34' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important; }
 }
 .nav-footer { border-top: 1px solid $site-border; color: $site-muted; font-size: .8rem; }
 .nav-footer a { color: $site-muted; }
@@ -199,5 +201,10 @@ body.nb-rmd {
   .nb-meta a.nb-pub { color: $site-muted; font-size: .78rem; }
   a.nb-file { display: inline-block; text-decoration: none; }
   a.nb-file:hover { text-decoration: underline; }
+  .nb-name { display: flex; gap: .9rem; align-items: flex-start; }
+  .nb-thumb { flex: 0 0 136px; display: block; overflow: hidden; border: 1px solid $site-border; border-radius: 4px; background: $site-code; }
+  .nb-thumb img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .3s ease; }
+  .nb-row:hover .nb-thumb img { transform: scale(1.05); }
 }
+@media (max-width: 760px) { .nb-tree .nb-thumb { display: none; } }
 @media (max-width: 600px) { .nb-tree .nb-tree-head, .nb-tree .nb-row { grid-template-columns: 1fr; } }

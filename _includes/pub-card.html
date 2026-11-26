@@ -1,0 +1,17 @@
+{%- comment -%}
+  One publication in the list on /publications/.
+  Usage: {% include pub-card.html post=post %}
+  Optional front matter used here: doi_url, pdf_url, notebook_url, web_url, web_label.
+{%- endcomment -%}
+{%- include base_path -%}
+{%- assign p = include.post -%}
+{%- assign authors = p.citation | split: p.title | first | strip -%}
+<article class="pub">
+<div class="pub__badges"><span class="pub__venue">{{ p.venue }}</span></div>
+<h3 class="pub__title"><a href="{{ base_path }}{{ p.url }}">{{ p.title }}</a></h3>
+<p class="pub__authors">{{ authors }}</p>
+{%- if p.excerpt %}
+<p class="pub__excerpt">{{ p.excerpt | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>
+{%- endif %}
+{% include pub-links.html post=p %}
+</article>

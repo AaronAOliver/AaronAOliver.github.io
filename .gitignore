@@ -1,3 +1,5 @@
 _site/
 
 images/postertest2.PNG
+.sass-cache/
+.jekyll-cache/

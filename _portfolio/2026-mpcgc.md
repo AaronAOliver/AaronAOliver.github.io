@@ -1,26 +1,29 @@
 ---
-title: "mpCGC: a pipeline for marine CAZyme gene clusters"
-excerpt: "A Nextflow pipeline that annotates CAZyme gene clusters across thousands of marine genomes. I used it to build mpCGCdb.<br/><img src='/notebooks/assets/thumbs/mpcgc.png' width='500'>"
+title: "mpCGCdb: polysaccharide-utilization gene clusters across the ocean"
+excerpt: "A catalog of 289,962 CAZyme gene clusters from 22,607 marine genomes, built with my Nextflow pipeline mpCGC."
 collection: portfolio
 date: 2026-09-25
 link: /notebooks/mpcgc.html
+thumbnail: /notebooks/assets/thumbs/mpcgc.png
+thumbnail_alt: "CAZyme gene clusters against genomes for each phylum in mpCGCdb"
+paper_url: https://doi.org/10.64898/2026.09.21.753266
+paper_label: bioRxiv 2026
+code_url: https://github.com/AaronAOliver/mpCGC
+web_url: https://mpcgcdb.com
+web_label: mpCGCdb
 ---
-
-[Open the interactive notebook](/notebooks/mpcgc.html)
 
 mpCGC extends dbCAN with a cross-genome catalog, an enzyme-mining layer
 (colocalization networks, sequence similarity networks with Leiden communities,
 alignments and phylogenies) and a diversity layer (enzyme fingerprints and
-Chao2 rarefaction). I used it to build [mpCGCdb](https://mpcgcdb.com): 289,962
-CAZyme gene clusters from 22,607 marine genomes.
+Chao2 rarefaction). The database can be browsed at
+[mpcgcdb.com](https://mpcgcdb.com).
 
-The notebook presents the preprint's five main figures (the pipeline,
-cluster richness by lineage, phylum signatures, the S1_4 sulfatase and enzyme
-colocalization), with charts built from the database statistics and
-interactive views from mpCGCdb.
+## In the notebook
 
-- Preprint: [Oliver, Podell & Allen 2026, *bioRxiv*](https://doi.org/10.64898/2026.09.21.753266)
-- Code: [github.com/AaronAOliver/mpCGC](https://github.com/AaronAOliver/mpCGC)
-- Database: [mpcgcdb.com](https://mpcgcdb.com)
-
-*Skills: Nextflow DSL2, conda/Docker/Singularity, HPC (Slurm), Python, dbCAN, DIAMOND, HMMER, CI testing.*
+- The pipeline
+- What the database contains, with a taxonomy browser
+- Rarefaction of cluster diversity by lineage
+- Phylum-specific cluster signatures
+- The S1_4 sulfatase: phylogeny, taxonomy, host prevalence and colocalization network
+- Enzyme colocalization

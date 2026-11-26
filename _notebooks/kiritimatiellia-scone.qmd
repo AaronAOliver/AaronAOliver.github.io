@@ -271,7 +271,7 @@ hydrogenases balance redox, and surplus carbon supports nitrogen fixation.
 
 ```{python}
 hyd = pd.read_csv(REPO / "data" / "hyd" / "hyddb_run" / "hydA_hyddb_classification.tsv", sep="\t")
-hyd["organisation"] = hyd.organisation.str.replace("_", " ")
+hyd["organisation"] = hyd.organisation.str.replace("_", " ").replace({"feadh": "Fe-ADH"})
 hyd["HydDB_FeFe_subtype"] = hyd.HydDB_FeFe_subtype.str.replace("_", " ")
 tab = hyd.groupby(["HydDB_FeFe_subtype", "organisation"]).size().reset_index(name="n")
 order = hyd.HydDB_FeFe_subtype.value_counts().index.tolist()
